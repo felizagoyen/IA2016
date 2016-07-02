@@ -5,6 +5,53 @@
 /**         ALL FUNCTIONS ARE SAVED BELOW             **/
 /*********************************************************/
 
+       /*************************************
+        ****  FUNCTION: calcular_distancia_formacion
+        *************************************/
+MakeFunction( calcular_distancia_formacion, [],
+SetValue(Tren_Actual:Distancia_Proxima_Formacion, Recorrido_Actual:Posicion_Siguiente_Tren - Tren_Actual:Posicion) );
+
+       /*************************************
+        ****  FUNCTION: calcular_distancia_estacion
+        *************************************/
+MakeFunction( calcular_distancia_estacion, [],
+SetValue(Tren_Actual:Distancia_Proxima_Estacion, Proxima_Estacion:Posicion - Tren_Actual.Posicion) );
+
+       /*************************************
+        ****  FUNCTION: calcular_distancia_curva
+        *************************************/
+MakeFunction( calcular_distancia_curva, [],
+SetValue(Tren_Actual:Distancia_Proxima_Curva, Recorrido:Proxima_Curva:Posicion_Inicio - Tren_Actual:Posicion) );
+
+       /*************************************
+        ****  FUNCTION: calcular_velocidad_curva
+        *************************************/
+MakeFunction( calcular_velocidad_curva, [],
+SetValue(Recorrido_Actual:Proxima_Curva:Velocidad, 2.2 * Sqrt(Recorrido_Actual:Proxima_Curva:Radio) * Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Factor) );
+
+       /*************************************
+        ****  FUNCTION: factor_condicion_climatica
+        *************************************/
+MakeFunction( factor_condicion_climatica, [],
+{
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "despejado"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 1); 
+
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "nieve"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 0.7); 
+
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "lluvia"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 0.85); 
+
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "niebla"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 0.85);
+
+} );
+
 
 
 /*********************************************************/
