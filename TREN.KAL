@@ -1,0 +1,294 @@
+
+
+
+/*********************************************************/
+/**         ALL FUNCTIONS ARE SAVED BELOW             **/
+/*********************************************************/
+
+
+
+/*********************************************************/
+/**         ALL CLASSES ARE SAVED BELOW             **/
+/*********************************************************/
+
+       /*************************************
+        ****  CLASS: Menu
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Image
+        *************************************/
+
+       /*************************************
+        ****  CLASS: SlotView
+        *************************************/
+
+       /*************************************
+        ****  CLASS: OutputView
+        *************************************/
+
+       /*************************************
+        ****  CLASS: StateBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Meter
+        *************************************/
+
+       /*************************************
+        ****  CLASS: InputOutputView
+        *************************************/
+
+       /*************************************
+        ****  CLASS: ListBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: SingleListBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: ComboBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: MultipleListBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Edit
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Slider
+        *************************************/
+
+       /*************************************
+        ****  CLASS: CheckBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: CheckBoxGroup
+        *************************************/
+
+       /*************************************
+        ****  CLASS: RadioButtonGroup
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Button
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Text
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Transcript
+        *************************************/
+
+       /*************************************
+        ****  CLASS: LinePlot
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Bitmap
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Drawing
+        *************************************/
+
+       /*************************************
+        ****  CLASS: KWindow
+        *************************************/
+
+       /*************************************
+        ****  CLASS: KSession
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Tren
+        *************************************/
+MakeClass( Tren, Root );
+MakeSlot( Tren:Velocidad_Actual );
+SetSlotOption( Tren:Velocidad_Actual, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Velocidad_Actual, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Velocidad_Actual, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Posicion );
+SetSlotOption( Tren:Posicion, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Posicion, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Posicion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Capacidad );
+SetSlotOption( Tren:Capacidad, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Capacidad, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Capacidad, MAXIMUM_VALUE, 100 );
+MakeSlot( Tren:Estado_Puertas );
+SetSlotOption( Tren:Estado_Puertas, ALLOWABLE_VALUES, Abiertas, Cerradas );
+MakeSlot( Tren:Distancia_A_Proxima_Formacion );
+SetSlotOption( Tren:Distancia_A_Proxima_Formacion, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Distancia_A_Proxima_Formacion, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Distancia_A_Proxima_Formacion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Distancia_A_Proxima_Estacion );
+SetSlotOption( Tren:Distancia_A_Proxima_Estacion, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Distancia_A_Proxima_Estacion, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Distancia_A_Proxima_Estacion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Distancia_A_Proxima_Curva );
+SetSlotOption( Tren:Distancia_A_Proxima_Curva, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Distancia_A_Proxima_Curva, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Distancia_A_Proxima_Curva, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Recorrido );
+SetSlotOption( Tren:Recorrido, VALUE_TYPE, OBJECT );
+SetSlotOption( Tren:Recorrido, ALLOWABLE_CLASSES, Recorrido );
+MakeSlot( Tren:Transitando_Curva );
+SetSlotOption( Tren:Transitando_Curva, VALUE_TYPE, BOOLEAN );
+MakeSlot( Tren:Accion_Sugerida );
+
+       /*************************************
+        ****  CLASS: Recorrido
+        *************************************/
+MakeClass( Recorrido, Root );
+MakeSlot( Recorrido:Proxima_Curva );
+SetSlotOption( Recorrido:Proxima_Curva, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Proxima_Curva, ALLOWABLE_CLASSES, Curva );
+MakeSlot( Recorrido:Posicion_Siguiente_Tren );
+SetSlotOption( Recorrido:Posicion_Siguiente_Tren, VALUE_TYPE, NUMBER );
+SetSlotOption( Recorrido:Posicion_Siguiente_Tren, MINIMUM_VALUE, 0 );
+SetSlotOption( Recorrido:Posicion_Siguiente_Tren, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Recorrido:Velocidad_Maxima_Reglamentaria );
+SetSlotOption( Recorrido:Velocidad_Maxima_Reglamentaria, VALUE_TYPE, NUMBER );
+SetSlotOption( Recorrido:Velocidad_Maxima_Reglamentaria, MINIMUM_VALUE, 0 );
+SetSlotOption( Recorrido:Velocidad_Maxima_Reglamentaria, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Recorrido:Velocidad_Maxima_Permitida );
+SetSlotOption( Recorrido:Velocidad_Maxima_Permitida, VALUE_TYPE, NUMBER );
+SetSlotOption( Recorrido:Velocidad_Maxima_Permitida, MINIMUM_VALUE, 0 );
+SetSlotOption( Recorrido:Velocidad_Maxima_Permitida, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Recorrido:Estacion );
+SetSlotOption( Recorrido:Estacion, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Estacion, ALLOWABLE_CLASSES, Estacion );
+MakeSlot( Recorrido:Semaforo );
+SetSlotOption( Recorrido:Semaforo, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Semaforo, ALLOWABLE_CLASSES, Semaforo );
+MakeSlot( Recorrido:Condicion_Climantica );
+SetSlotOption( Recorrido:Condicion_Climantica, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Condicion_Climantica, ALLOWABLE_CLASSES, Condicion_Climatica );
+
+       /*************************************
+        ****  CLASS: Semaforo
+        *************************************/
+MakeClass( Semaforo, Root );
+MakeSlot( Semaforo:Color );
+SetSlotOption( Semaforo:Color, ALLOWABLE_VALUES, Rojo, Amarillo, Verde );
+
+       /*************************************
+        ****  CLASS: Estacion
+        *************************************/
+MakeClass( Estacion, Root );
+MakeSlot( Estacion:Posicion );
+SetSlotOption( Estacion:Posicion, VALUE_TYPE, NUMBER );
+SetSlotOption( Estacion:Posicion, MINIMUM_VALUE, 0 );
+SetSlotOption( Estacion:Posicion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Estacion:Distancia_Minima_Frenado );
+SetSlotOption( Estacion:Distancia_Minima_Frenado, VALUE_TYPE, NUMBER );
+SetSlotOption( Estacion:Distancia_Minima_Frenado, MINIMUM_VALUE, 0 );
+SetSlotOption( Estacion:Distancia_Minima_Frenado, MAXIMUM_VALUE, 999999999999 );
+
+       /*************************************
+        ****  CLASS: Condicion_Climatica
+        *************************************/
+MakeClass( Condicion_Climatica, Root );
+MakeSlot( Condicion_Climatica:Descripcion );
+SetSlotOption( Condicion_Climatica:Descripcion, ALLOWABLE_VALUES, Lluvia, Nieve, Niebla, Despejado );
+MakeSlot( Condicion_Climatica:Factor );
+SetSlotOption( Condicion_Climatica:Factor, VALUE_TYPE, NUMBER );
+SetSlotOption( Condicion_Climatica:Factor, MINIMUM_VALUE, 0 );
+SetSlotOption( Condicion_Climatica:Factor, MAXIMUM_VALUE, 1 );
+
+       /*************************************
+        ****  CLASS: Curva
+        *************************************/
+MakeClass( Curva, Root );
+MakeSlot( Curva:Posicion_Inicio );
+SetSlotOption( Curva:Posicion_Inicio, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Posicion_Inicio, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Posicion_Inicio, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Velocidad );
+SetSlotOption( Curva:Velocidad, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Velocidad, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Velocidad, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Posicion_Fin );
+SetSlotOption( Curva:Posicion_Fin, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Posicion_Fin, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Posicion_Fin, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Radio );
+SetSlotOption( Curva:Radio, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Radio, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Radio, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Distancia_Minima_Frenado );
+SetSlotOption( Curva:Distancia_Minima_Frenado, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Distancia_Minima_Frenado, MINIMUM_VALUE, -99999999999 );
+SetSlotOption( Curva:Distancia_Minima_Frenado, MAXIMUM_VALUE, 999999999999 );
+
+
+
+/*********************************************************/
+/**         ALL INSTANCES ARE SAVED BELOW             **/
+/*********************************************************/
+
+       /*************************************
+        ****  INSTANCE: SESSION
+        *************************************/
+SESSION:X = 20;
+SESSION:Y = 120;
+SESSION:Width = 465;
+SESSION:Height = 220;
+SESSION:Visible = FALSE;
+SESSION:State = HIDDEN;
+ ResetWindow (  SESSION  ); 
+
+       /*************************************
+        ****  INSTANCE: Proximo_Semaforo
+        *************************************/
+MakeInstance( Proximo_Semaforo, Semaforo );
+
+       /*************************************
+        ****  INSTANCE: Proxima_Estacion
+        *************************************/
+MakeInstance( Proxima_Estacion, Estacion );
+
+       /*************************************
+        ****  INSTANCE: Proxima_Curva
+        *************************************/
+MakeInstance( Proxima_Curva, Curva );
+
+       /*************************************
+        ****  INSTANCE: Condicion_Climatica_Actual
+        *************************************/
+MakeInstance( Condicion_Climatica_Actual, Condicion_Climatica );
+
+       /*************************************
+        ****  INSTANCE: Tren_Actual
+        *************************************/
+MakeInstance( Tren_Actual, Tren );
+Tren_Actual:Recorrido = Recorrido_Actual;
+
+       /*************************************
+        ****  INSTANCE: Recorrido_Actual
+        *************************************/
+MakeInstance( Recorrido_Actual, Recorrido );
+Recorrido_Actual:Proxima_Curva = Proxima_Curva;
+Recorrido_Actual:Estacion = Proxima_Estacion;
+Recorrido_Actual:Semaforo = Proximo_Semaforo;
+Recorrido_Actual:Condicion_Climantica = Condicion_Climatica_Actual;
+
+
+
+/*********************************************************/
+/**         ALL RULES ARE SAVED BELOW             **/
+/*********************************************************/
+
+
+
+/*********************************************************/
+/**         ALL GOALS ARE SAVED BELOW             **/
+/*********************************************************/
