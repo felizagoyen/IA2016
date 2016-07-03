@@ -52,6 +52,60 @@ Then
 
 } );
 
+       /*************************************
+        ****  FUNCTION: factor_capacidad
+        *************************************/
+MakeFunction( factor_capacidad, [],
+{
+If Tren_Actual:Capacidad:Valor >= 75
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 1); 
+
+If Tren_Actual:Capacidad:Valor < 75 And Tren_Actual:Capacidad:Valor >= 50
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 0.95); 
+
+If Tren_Actual:Capacidad:Valor < 50 And Tren_Actual:Capacidad:Valor >= 25
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 0.9); 
+
+If Tren_Actual:Capacidad:Valor < 25
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 0.85);
+
+} );
+
+       /*************************************
+        ****  FUNCTION: calcular_velocidad_maxima
+        *************************************/
+MakeFunction( calcular_velocidad_maxima, [],
+SetValue(Recorrido_Actual:Velocidad_Maxima_Permitida, Recorrido_Actual:Velocidad_Maxima_Reglamentaria * Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Capacidad:Factor) );
+
+       /*************************************
+        ****  FUNCTION: transitando_curva
+        *************************************/
+MakeFunction( transitando_curva, [],
+If Tren_Actual:Posicion < Recorrido_Actual:Proxima_Curva:Posicion_Fin 
+    And Tren_Actual:Posicion > Recorrido_Actual:Proxima_Curva:Posicion_Inicio
+Then
+    SetValue(Tren_Actual:Transitando_Curva, true)
+Else
+    SetValue(Tren_Actual:Transitando_Curva, false) );
+
+       /*************************************
+        ****  FUNCTION: distancia_min_frenado_estacion
+        *************************************/
+MakeFunction( distancia_min_frenado_estacion, [],
+SetValue(Recorrido_Actual:Proxima_Estacion:Distancia_Minima_Frenado, 
+    Tren_Actual:Velocidad * 10 / (Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Capacidad:Factor)) );
+
+       /*************************************
+        ****  FUNCTION: distancia_min_frenado_curva
+        *************************************/
+MakeFunction( distancia_min_frenado_curva, [],
+SetValue(Recorrido_Actual:Proxima_Estacion:Distancia_Minima_Frenado, 
+    (Tren_Actual:Velocidad - Recorrido_Actual:Proxima_Curva:Velocidad) * 10 / (Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Capacidad:Factor)) );
+
 
 
 /*********************************************************/
@@ -167,9 +221,8 @@ SetSlotOption( Tren:Posicion, VALUE_TYPE, NUMBER );
 SetSlotOption( Tren:Posicion, MINIMUM_VALUE, 0 );
 SetSlotOption( Tren:Posicion, MAXIMUM_VALUE, 999999999999 );
 MakeSlot( Tren:Capacidad );
-SetSlotOption( Tren:Capacidad, VALUE_TYPE, NUMBER );
-SetSlotOption( Tren:Capacidad, MINIMUM_VALUE, 0 );
-SetSlotOption( Tren:Capacidad, MAXIMUM_VALUE, 100 );
+SetSlotOption( Tren:Capacidad, VALUE_TYPE, OBJECT );
+SetSlotOption( Tren:Capacidad, ALLOWABLE_CLASSES, Capacidad );
 MakeSlot( Tren:Estado_Puertas );
 SetSlotOption( Tren:Estado_Puertas, ALLOWABLE_VALUES, Abiertas, Cerradas );
 MakeSlot( Tren:Distancia_A_Proxima_Formacion );
@@ -276,6 +329,19 @@ SetSlotOption( Curva:Distancia_Minima_Frenado, VALUE_TYPE, NUMBER );
 SetSlotOption( Curva:Distancia_Minima_Frenado, MINIMUM_VALUE, -99999999999 );
 SetSlotOption( Curva:Distancia_Minima_Frenado, MAXIMUM_VALUE, 999999999999 );
 
+       /*************************************
+        ****  CLASS: Capacidad
+        *************************************/
+MakeClass( Capacidad, Root );
+MakeSlot( Capacidad:Valor );
+SetSlotOption( Capacidad:Valor, VALUE_TYPE, NUMBER );
+SetSlotOption( Capacidad:Valor, MINIMUM_VALUE, 0 );
+SetSlotOption( Capacidad:Valor, MAXIMUM_VALUE, 100 );
+MakeSlot( Capacidad:Factor );
+SetSlotOption( Capacidad:Factor, VALUE_TYPE, NUMBER );
+SetSlotOption( Capacidad:Factor, MINIMUM_VALUE, 0 );
+SetSlotOption( Capacidad:Factor, MAXIMUM_VALUE, 1 );
+
 
 
 /*********************************************************/
@@ -318,6 +384,7 @@ MakeInstance( Condicion_Climatica_Actual, Condicion_Climatica );
         *************************************/
 MakeInstance( Tren_Actual, Tren );
 Tren_Actual:Recorrido = Recorrido_Actual;
+Tren_Actual:Capacidad = Capacidad_Tren_Actual;
 
        /*************************************
         ****  INSTANCE: Recorrido_Actual
@@ -327,6 +394,11 @@ Recorrido_Actual:Proxima_Curva = Proxima_Curva;
 Recorrido_Actual:Estacion = Proxima_Estacion;
 Recorrido_Actual:Semaforo = Proximo_Semaforo;
 Recorrido_Actual:Condicion_Climantica = Condicion_Climatica_Actual;
+
+       /*************************************
+        ****  INSTANCE: Capacidad_Tren_Actual
+        *************************************/
+MakeInstance( Capacidad_Tren_Actual, Capacidad );
 
 
 
