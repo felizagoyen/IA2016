@@ -1,0 +1,1888 @@
+
+
+
+/*********************************************************/
+/**         ALL FUNCTIONS ARE SAVED BELOW             **/
+/*********************************************************/
+
+       /*************************************
+        ****  FUNCTION: calcular_distancia_formacion
+        *************************************/
+MakeFunction( calcular_distancia_formacion, [],
+SetValue(Tren_Actual:Distancia_Proxima_Formacion, Recorrido_Actual:Posicion_Siguiente_Tren - Tren_Actual:Posicion) );
+
+       /*************************************
+        ****  FUNCTION: calcular_distancia_estacion
+        *************************************/
+MakeFunction( calcular_distancia_estacion, [],
+SetValue(Tren_Actual:Distancia_Proxima_Estacion, Proxima_Estacion:Posicion - Tren_Actual.Posicion) );
+
+       /*************************************
+        ****  FUNCTION: calcular_distancia_curva
+        *************************************/
+MakeFunction( calcular_distancia_curva, [],
+SetValue(Tren_Actual:Distancia_Proxima_Curva, Recorrido:Proxima_Curva:Posicion_Inicio - Tren_Actual:Posicion) );
+
+       /*************************************
+        ****  FUNCTION: calcular_velocidad_curva
+        *************************************/
+MakeFunction( calcular_velocidad_curva, [],
+SetValue(Recorrido_Actual:Proxima_Curva:Velocidad, 2.2 * Sqrt(Recorrido_Actual:Proxima_Curva:Radio) * Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Factor) );
+
+       /*************************************
+        ****  FUNCTION: factor_condicion_climatica
+        *************************************/
+MakeFunction( factor_condicion_climatica, [],
+{
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "despejado"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 1); 
+
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "nieve"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 0.7); 
+
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "lluvia"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 0.85); 
+
+If Recorrido_Actual:Condicion_Climatica:Descripcion #= "niebla"
+Then
+   SetValue(Recorrido_Actual:Condicion_Climatica:Factor, 0.85);
+
+} );
+
+       /*************************************
+        ****  FUNCTION: factor_capacidad
+        *************************************/
+MakeFunction( factor_capacidad, [],
+{
+If Tren_Actual:Capacidad:Valor >= 75
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 1); 
+
+If Tren_Actual:Capacidad:Valor < 75 And Tren_Actual:Capacidad:Valor >= 50
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 0.95); 
+
+If Tren_Actual:Capacidad:Valor < 50 And Tren_Actual:Capacidad:Valor >= 25
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 0.9); 
+
+If Tren_Actual:Capacidad:Valor < 25
+Then
+   SetValue(Tren_Actual:Capacidad:Factor, 0.85);
+
+} );
+
+       /*************************************
+        ****  FUNCTION: calcular_velocidad_maxima
+        *************************************/
+MakeFunction( calcular_velocidad_maxima, [],
+SetValue(Recorrido_Actual:Velocidad_Maxima_Permitida, Recorrido_Actual:Velocidad_Maxima_Reglamentaria * Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Capacidad:Factor) );
+
+       /*************************************
+        ****  FUNCTION: transitando_curva
+        *************************************/
+MakeFunction( transitando_curva, [],
+If Tren_Actual:Posicion < Recorrido_Actual:Proxima_Curva:Posicion_Fin 
+    And Tren_Actual:Posicion > Recorrido_Actual:Proxima_Curva:Posicion_Inicio
+Then
+    SetValue(Tren_Actual:Transitando_Curva, true)
+Else
+    SetValue(Tren_Actual:Transitando_Curva, false) );
+
+       /*************************************
+        ****  FUNCTION: distancia_min_frenado_estacion
+        *************************************/
+MakeFunction( distancia_min_frenado_estacion, [],
+SetValue(Recorrido_Actual:Proxima_Estacion:Distancia_Minima_Frenado, 
+    Tren_Actual:Velocidad * 10 / (Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Capacidad:Factor)) );
+
+       /*************************************
+        ****  FUNCTION: distancia_min_frenado_curva
+        *************************************/
+MakeFunction( distancia_min_frenado_curva, [],
+SetValue(Recorrido_Actual:Proxima_Estacion:Distancia_Minima_Frenado, 
+    (Tren_Actual:Velocidad - Recorrido_Actual:Proxima_Curva:Velocidad) * 10 / (Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Capacidad:Factor)) );
+
+
+
+/*********************************************************/
+/**         ALL CLASSES ARE SAVED BELOW             **/
+/*********************************************************/
+
+       /*************************************
+        ****  CLASS: Menu
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Image
+        *************************************/
+
+       /*************************************
+        ****  CLASS: SlotView
+        *************************************/
+
+       /*************************************
+        ****  CLASS: OutputView
+        *************************************/
+
+       /*************************************
+        ****  CLASS: StateBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Meter
+        *************************************/
+
+       /*************************************
+        ****  CLASS: InputOutputView
+        *************************************/
+
+       /*************************************
+        ****  CLASS: ListBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: SingleListBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: ComboBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: MultipleListBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Edit
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Slider
+        *************************************/
+
+       /*************************************
+        ****  CLASS: CheckBox
+        *************************************/
+
+       /*************************************
+        ****  CLASS: CheckBoxGroup
+        *************************************/
+
+       /*************************************
+        ****  CLASS: RadioButtonGroup
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Button
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Text
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Transcript
+        *************************************/
+
+       /*************************************
+        ****  CLASS: LinePlot
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Bitmap
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Drawing
+        *************************************/
+
+       /*************************************
+        ****  CLASS: KWindow
+        *************************************/
+
+       /*************************************
+        ****  CLASS: KSession
+        *************************************/
+
+       /*************************************
+        ****  CLASS: Tren
+        *************************************/
+MakeClass( Tren, Root );
+MakeSlot( Tren:Velocidad_Actual );
+SetSlotOption( Tren:Velocidad_Actual, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Velocidad_Actual, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Velocidad_Actual, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Posicion );
+SetSlotOption( Tren:Posicion, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Posicion, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Posicion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Capacidad );
+SetSlotOption( Tren:Capacidad, VALUE_TYPE, OBJECT );
+SetSlotOption( Tren:Capacidad, ALLOWABLE_CLASSES, Capacidad );
+MakeSlot( Tren:Estado_Puertas );
+SetSlotOption( Tren:Estado_Puertas, ALLOWABLE_VALUES, Abiertas, Cerradas );
+MakeSlot( Tren:Distancia_A_Proxima_Formacion );
+SetSlotOption( Tren:Distancia_A_Proxima_Formacion, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Distancia_A_Proxima_Formacion, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Distancia_A_Proxima_Formacion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Distancia_A_Proxima_Estacion );
+SetSlotOption( Tren:Distancia_A_Proxima_Estacion, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Distancia_A_Proxima_Estacion, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Distancia_A_Proxima_Estacion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Distancia_A_Proxima_Curva );
+SetSlotOption( Tren:Distancia_A_Proxima_Curva, VALUE_TYPE, NUMBER );
+SetSlotOption( Tren:Distancia_A_Proxima_Curva, MINIMUM_VALUE, 0 );
+SetSlotOption( Tren:Distancia_A_Proxima_Curva, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Tren:Recorrido );
+SetSlotOption( Tren:Recorrido, VALUE_TYPE, OBJECT );
+SetSlotOption( Tren:Recorrido, ALLOWABLE_CLASSES, Recorrido );
+MakeSlot( Tren:Transitando_Curva );
+SetSlotOption( Tren:Transitando_Curva, VALUE_TYPE, BOOLEAN );
+MakeSlot( Tren:Accion_Sugerida );
+
+       /*************************************
+        ****  CLASS: Recorrido
+        *************************************/
+MakeClass( Recorrido, Root );
+MakeSlot( Recorrido:Proxima_Curva );
+SetSlotOption( Recorrido:Proxima_Curva, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Proxima_Curva, ALLOWABLE_CLASSES, Curva );
+MakeSlot( Recorrido:Posicion_Siguiente_Tren );
+SetSlotOption( Recorrido:Posicion_Siguiente_Tren, VALUE_TYPE, NUMBER );
+SetSlotOption( Recorrido:Posicion_Siguiente_Tren, MINIMUM_VALUE, 0 );
+SetSlotOption( Recorrido:Posicion_Siguiente_Tren, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Recorrido:Velocidad_Maxima_Reglamentaria );
+SetSlotOption( Recorrido:Velocidad_Maxima_Reglamentaria, VALUE_TYPE, NUMBER );
+SetSlotOption( Recorrido:Velocidad_Maxima_Reglamentaria, MINIMUM_VALUE, 0 );
+SetSlotOption( Recorrido:Velocidad_Maxima_Reglamentaria, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Recorrido:Velocidad_Maxima_Permitida );
+SetSlotOption( Recorrido:Velocidad_Maxima_Permitida, VALUE_TYPE, NUMBER );
+SetSlotOption( Recorrido:Velocidad_Maxima_Permitida, MINIMUM_VALUE, 0 );
+SetSlotOption( Recorrido:Velocidad_Maxima_Permitida, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Recorrido:Estacion );
+SetSlotOption( Recorrido:Estacion, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Estacion, ALLOWABLE_CLASSES, Estacion );
+MakeSlot( Recorrido:Semaforo );
+SetSlotOption( Recorrido:Semaforo, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Semaforo, ALLOWABLE_CLASSES, Semaforo );
+MakeSlot( Recorrido:Condicion_Climantica );
+SetSlotOption( Recorrido:Condicion_Climantica, VALUE_TYPE, OBJECT );
+SetSlotOption( Recorrido:Condicion_Climantica, ALLOWABLE_CLASSES, Condicion_Climatica );
+
+       /*************************************
+        ****  CLASS: Semaforo
+        *************************************/
+MakeClass( Semaforo, Root );
+MakeSlot( Semaforo:Color );
+SetSlotOption( Semaforo:Color, ALLOWABLE_VALUES, Rojo, Amarillo, Verde );
+
+       /*************************************
+        ****  CLASS: Estacion
+        *************************************/
+MakeClass( Estacion, Root );
+MakeSlot( Estacion:Posicion );
+SetSlotOption( Estacion:Posicion, VALUE_TYPE, NUMBER );
+SetSlotOption( Estacion:Posicion, MINIMUM_VALUE, 0 );
+SetSlotOption( Estacion:Posicion, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Estacion:Distancia_Minima_Frenado );
+SetSlotOption( Estacion:Distancia_Minima_Frenado, VALUE_TYPE, NUMBER );
+SetSlotOption( Estacion:Distancia_Minima_Frenado, MINIMUM_VALUE, 0 );
+SetSlotOption( Estacion:Distancia_Minima_Frenado, MAXIMUM_VALUE, 999999999999 );
+
+       /*************************************
+        ****  CLASS: Condicion_Climatica
+        *************************************/
+MakeClass( Condicion_Climatica, Root );
+MakeSlot( Condicion_Climatica:Descripcion );
+SetSlotOption( Condicion_Climatica:Descripcion, ALLOWABLE_VALUES, Lluvia, Nieve, Niebla, Despejado );
+MakeSlot( Condicion_Climatica:Factor );
+SetSlotOption( Condicion_Climatica:Factor, VALUE_TYPE, NUMBER );
+SetSlotOption( Condicion_Climatica:Factor, MINIMUM_VALUE, 0 );
+SetSlotOption( Condicion_Climatica:Factor, MAXIMUM_VALUE, 1 );
+
+       /*************************************
+        ****  CLASS: Curva
+        *************************************/
+MakeClass( Curva, Root );
+MakeSlot( Curva:Posicion_Inicio );
+SetSlotOption( Curva:Posicion_Inicio, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Posicion_Inicio, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Posicion_Inicio, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Velocidad );
+SetSlotOption( Curva:Velocidad, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Velocidad, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Velocidad, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Posicion_Fin );
+SetSlotOption( Curva:Posicion_Fin, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Posicion_Fin, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Posicion_Fin, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Radio );
+SetSlotOption( Curva:Radio, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Radio, MINIMUM_VALUE, 0 );
+SetSlotOption( Curva:Radio, MAXIMUM_VALUE, 999999999999 );
+MakeSlot( Curva:Distancia_Minima_Frenado );
+SetSlotOption( Curva:Distancia_Minima_Frenado, VALUE_TYPE, NUMBER );
+SetSlotOption( Curva:Distancia_Minima_Frenado, MINIMUM_VALUE, -99999999999 );
+SetSlotOption( Curva:Distancia_Minima_Frenado, MAXIMUM_VALUE, 999999999999 );
+
+       /*************************************
+        ****  CLASS: Capacidad
+        *************************************/
+MakeClass( Capacidad, Root );
+MakeSlot( Capacidad:Valor );
+SetSlotOption( Capacidad:Valor, VALUE_TYPE, NUMBER );
+SetSlotOption( Capacidad:Valor, MINIMUM_VALUE, 0 );
+SetSlotOption( Capacidad:Valor, MAXIMUM_VALUE, 100 );
+MakeSlot( Capacidad:Factor );
+SetSlotOption( Capacidad:Factor, VALUE_TYPE, NUMBER );
+SetSlotOption( Capacidad:Factor, MINIMUM_VALUE, 0 );
+SetSlotOption( Capacidad:Factor, MAXIMUM_VALUE, 1 );
+
+
+
+/*********************************************************/
+/**         ALL INSTANCES ARE SAVED BELOW             **/
+/*********************************************************/
+
+       /*************************************
+        ****  INSTANCE: SESSION
+        *************************************/
+SESSION:X = 33;
+SESSION:Y = 104;
+SESSION:Title = Velocidad;
+SESSION:Width = 784;
+SESSION:Height = 578;
+SESSION:Visible = FALSE;
+SESSION:State = HIDDEN;
+SetValue( SESSION:BackgroundColor, 223, 223, 223 );
+SESSION:Menu = TRUE;
+SESSION:Titlebar = TRUE;
+SESSION:Sizebox = TRUE;
+ ResetWindow (  SESSION  ); 
+
+       /*************************************
+        ****  INSTANCE: Proximo_Semaforo
+        *************************************/
+MakeInstance( Proximo_Semaforo, Semaforo );
+
+       /*************************************
+        ****  INSTANCE: Proxima_Estacion
+        *************************************/
+MakeInstance( Proxima_Estacion, Estacion );
+
+       /*************************************
+        ****  INSTANCE: Proxima_Curva
+        *************************************/
+MakeInstance( Proxima_Curva, Curva );
+
+       /*************************************
+        ****  INSTANCE: Condicion_Climatica_Actual
+        *************************************/
+MakeInstance( Condicion_Climatica_Actual, Condicion_Climatica );
+
+       /*************************************
+        ****  INSTANCE: Tren_Actual
+        *************************************/
+MakeInstance( Tren_Actual, Tren );
+Tren_Actual:Recorrido = Recorrido_Actual;
+Tren_Actual:Capacidad = Capacidad_Tren_Actual;
+
+       /*************************************
+        ****  INSTANCE: Recorrido_Actual
+        *************************************/
+MakeInstance( Recorrido_Actual, Recorrido );
+Recorrido_Actual:Proxima_Curva = Proxima_Curva;
+Recorrido_Actual:Estacion = Proxima_Estacion;
+Recorrido_Actual:Semaforo = Proximo_Semaforo;
+Recorrido_Actual:Condicion_Climantica = Condicion_Climatica_Actual;
+
+       /*************************************
+        ****  INSTANCE: Capacidad_Tren_Actual
+        *************************************/
+MakeInstance( Capacidad_Tren_Actual, Capacidad );
+
+       /*************************************
+        ****  INSTANCE: Meter1
+        *************************************/
+MakeInstance( Meter1, Meter );
+Meter1:SessionNumber = 0;
+Meter1:Title = Meter1;
+Meter1:Visible = FALSE;
+Meter1:X = 613;
+Meter1:Y = 305;
+SetValue( Meter1:ForegroundColor, 0, 0, 0 );
+SetValue( Meter1:BackgroundColor, 255, 255, 255 );
+SetValue( Meter1:ForegroundColor2, 0, 0, 0 );
+SetValue( Meter1:BackgroundColor2, 255, 255, 255 );
+Meter1:Width = 250;
+Meter1:Height = 120;
+ ResetImage (  Meter1  ); 
+
+       /*************************************
+        ****  INSTANCE: Meter2
+        *************************************/
+MakeInstance( Meter2, Meter );
+Meter2:SessionNumber = 0;
+Meter2:Title = NULL;
+Meter2:Visible = TRUE;
+Meter2:X = 388;
+Meter2:Y = 215;
+SetValue( Meter2:ForegroundColor, 0, 0, 0 );
+SetValue( Meter2:BackgroundColor, 223, 223, 223 );
+SetValue( Meter2:ForegroundColor2, 0, 0, 0 );
+SetValue( Meter2:BackgroundColor2, 255, 255, 255 );
+Meter2:Width = 286;
+Meter2:Height = 300;
+Meter2:MaxValue = 120;
+Meter2:MinValue = 0;
+Meter2:XTitle = Velo;
+Meter2:ShowBorder = FALSE;
+Meter2:Transparent = TRUE;
+Meter2:XFormat = "%100f";
+ ResetImage (  Meter2  ); 
+
+       /*************************************
+        ****  INSTANCE: ComboBox1
+        *************************************/
+MakeInstance( ComboBox1, ComboBox );
+ComboBox1:SessionNumber = 0;
+ComboBox1:Title = NULL;
+ComboBox1:Visible = TRUE;
+ComboBox1:X = 204;
+ComboBox1:Y = 310;
+SetValue( ComboBox1:ForegroundColor, 0, 0, 0 );
+SetValue( ComboBox1:BackgroundColor, 255, 255, 255 );
+SetValue( ComboBox1:ForegroundColor2, 0, 0, 0 );
+SetValue( ComboBox1:BackgroundColor2, 255, 255, 255 );
+ComboBox1:Width = 142;
+ComboBox1:Height = 27;
+ComboBox1:Transparent = TRUE;
+ ResetImage (  ComboBox1  ); 
+
+       /*************************************
+        ****  INSTANCE: ComboBox1_11
+        *************************************/
+MakeInstance( ComboBox1_11, ComboBox );
+ComboBox1_11:SessionNumber = 0;
+ComboBox1_11:Title = NULL;
+ComboBox1_11:Visible = TRUE;
+ComboBox1_11:X = 202;
+ComboBox1_11:Y = 475;
+SetValue( ComboBox1_11:ForegroundColor, 0, 0, 0 );
+SetValue( ComboBox1_11:BackgroundColor, 255, 255, 255 );
+SetValue( ComboBox1_11:ForegroundColor2, 0, 0, 0 );
+SetValue( ComboBox1_11:BackgroundColor2, 255, 255, 255 );
+ComboBox1_11:Width = 142;
+ComboBox1_11:Height = 27;
+ComboBox1_11:Transparent = TRUE;
+ ResetImage (  ComboBox1_11  ); 
+
+       /*************************************
+        ****  INSTANCE: ComboBox1_15
+        *************************************/
+MakeInstance( ComboBox1_15, ComboBox );
+ComboBox1_15:SessionNumber = 0;
+ComboBox1_15:Title = NULL;
+ComboBox1_15:Visible = TRUE;
+ComboBox1_15:X = 524;
+ComboBox1_15:Y = 125;
+SetValue( ComboBox1_15:ForegroundColor, 0, 0, 0 );
+SetValue( ComboBox1_15:BackgroundColor, 255, 255, 255 );
+SetValue( ComboBox1_15:ForegroundColor2, 0, 0, 0 );
+SetValue( ComboBox1_15:BackgroundColor2, 255, 255, 255 );
+ComboBox1_15:Width = 139;
+ComboBox1_15:Height = 27;
+ComboBox1_15:Transparent = TRUE;
+ ResetImage (  ComboBox1_15  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2
+        *************************************/
+MakeInstance( Edit2, Edit );
+Edit2:SessionNumber = 0;
+Edit2:Title = Edit2;
+Edit2:Visible = TRUE;
+Edit2:X = 221;
+Edit2:Y = 38;
+SetValue( Edit2:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2:BackgroundColor2, 255, 255, 255 );
+Edit2:Width = 125;
+Edit2:Height = 23;
+Edit2:Multiline = FALSE;
+Edit2:Password = FALSE;
+Edit2:TabStop = 1;
+ ResetImage (  Edit2  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit3
+        *************************************/
+MakeInstance( Edit3, Edit );
+Edit3:SessionNumber = 0;
+Edit3:Title = Edit3;
+Edit3:Visible = FALSE;
+Edit3:X = 222;
+Edit3:Y = 76;
+SetValue( Edit3:ForegroundColor, 0, 0, 0 );
+SetValue( Edit3:BackgroundColor, 255, 255, 255 );
+SetValue( Edit3:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit3:BackgroundColor2, 255, 255, 255 );
+Edit3:Width = 125;
+Edit3:Height = 23;
+Edit3:TabStop = 0;
+ ResetImage (  Edit3  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit4
+        *************************************/
+MakeInstance( Edit4, Edit );
+Edit4:SessionNumber = 0;
+Edit4:Title = Edit4;
+Edit4:Visible = FALSE;
+Edit4:X = 220;
+Edit4:Y = 116;
+SetValue( Edit4:ForegroundColor, 0, 0, 0 );
+SetValue( Edit4:BackgroundColor, 255, 255, 255 );
+SetValue( Edit4:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit4:BackgroundColor2, 255, 255, 255 );
+Edit4:Width = 127;
+Edit4:Height = 23;
+Edit4:TabStop = 0;
+ ResetImage (  Edit4  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit5
+        *************************************/
+MakeInstance( Edit5, Edit );
+Edit5:SessionNumber = 0;
+Edit5:Title = Edit5;
+Edit5:Visible = FALSE;
+Edit5:X = 222;
+Edit5:Y = 116;
+SetValue( Edit5:ForegroundColor, 0, 0, 0 );
+SetValue( Edit5:BackgroundColor, 255, 255, 255 );
+SetValue( Edit5:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit5:BackgroundColor2, 255, 255, 255 );
+Edit5:Width = 124;
+Edit5:Height = 25;
+Edit5:TabStop = 0;
+ ResetImage (  Edit5  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_0
+        *************************************/
+MakeInstance( Edit2_0, Edit );
+Edit2_0:SessionNumber = 0;
+Edit2_0:Title = Edit2;
+Edit2_0:Visible = TRUE;
+Edit2_0:X = 221;
+Edit2_0:Y = 73;
+SetValue( Edit2_0:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_0:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_0:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_0:BackgroundColor2, 255, 255, 255 );
+Edit2_0:Width = 125;
+Edit2_0:Height = 23;
+Edit2_0:Multiline = FALSE;
+Edit2_0:Password = FALSE;
+Edit2_0:TabStop = 2;
+ ResetImage (  Edit2_0  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_1
+        *************************************/
+MakeInstance( Edit2_1, Edit );
+Edit2_1:SessionNumber = 0;
+Edit2_1:Title = Edit2;
+Edit2_1:Visible = TRUE;
+Edit2_1:X = 221;
+Edit2_1:Y = 108;
+SetValue( Edit2_1:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_1:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_1:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_1:BackgroundColor2, 255, 255, 255 );
+Edit2_1:Width = 125;
+Edit2_1:Height = 23;
+Edit2_1:Multiline = FALSE;
+Edit2_1:Password = FALSE;
+Edit2_1:TabStop = 3;
+ ResetImage (  Edit2_1  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_2
+        *************************************/
+MakeInstance( Edit2_2, Edit );
+Edit2_2:SessionNumber = 0;
+Edit2_2:Title = Edit2;
+Edit2_2:Visible = TRUE;
+Edit2_2:X = 221;
+Edit2_2:Y = 142;
+SetValue( Edit2_2:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_2:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_2:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_2:BackgroundColor2, 255, 255, 255 );
+Edit2_2:Width = 125;
+Edit2_2:Height = 23;
+Edit2_2:Multiline = FALSE;
+Edit2_2:Password = FALSE;
+Edit2_2:TabStop = 4;
+ ResetImage (  Edit2_2  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_3
+        *************************************/
+MakeInstance( Edit2_3, Edit );
+Edit2_3:SessionNumber = 0;
+Edit2_3:Title = Edit2;
+Edit2_3:Visible = TRUE;
+Edit2_3:X = 206;
+Edit2_3:Y = 209;
+SetValue( Edit2_3:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_3:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_3:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_3:BackgroundColor2, 255, 255, 255 );
+Edit2_3:Width = 125;
+Edit2_3:Height = 23;
+Edit2_3:Multiline = FALSE;
+Edit2_3:Password = FALSE;
+Edit2_3:TabStop = 1;
+ ResetImage (  Edit2_3  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_3_5
+        *************************************/
+MakeInstance( Edit2_3_5, Edit );
+Edit2_3_5:SessionNumber = 0;
+Edit2_3_5:Title = Edit2;
+Edit2_3_5:Visible = TRUE;
+Edit2_3_5:X = 207;
+Edit2_3_5:Y = 235;
+SetValue( Edit2_3_5:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_3_5:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_3_5:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_3_5:BackgroundColor2, 255, 255, 255 );
+Edit2_3_5:Width = 125;
+Edit2_3_5:Height = 23;
+Edit2_3_5:Multiline = FALSE;
+Edit2_3_5:Password = FALSE;
+Edit2_3_5:TabStop = 1;
+ ResetImage (  Edit2_3_5  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_3_6
+        *************************************/
+MakeInstance( Edit2_3_6, Edit );
+Edit2_3_6:SessionNumber = 0;
+Edit2_3_6:Title = Edit2;
+Edit2_3_6:Visible = TRUE;
+Edit2_3_6:X = 210;
+Edit2_3_6:Y = 381;
+SetValue( Edit2_3_6:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_3_6:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_3_6:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_3_6:BackgroundColor2, 255, 255, 255 );
+Edit2_3_6:Width = 125;
+Edit2_3_6:Height = 23;
+Edit2_3_6:Multiline = FALSE;
+Edit2_3_6:Password = FALSE;
+Edit2_3_6:TabStop = 1;
+ ResetImage (  Edit2_3_6  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_3_7
+        *************************************/
+MakeInstance( Edit2_3_7, Edit );
+Edit2_3_7:SessionNumber = 0;
+Edit2_3_7:Title = Edit2;
+Edit2_3_7:Visible = TRUE;
+Edit2_3_7:X = 210;
+Edit2_3_7:Y = 408;
+SetValue( Edit2_3_7:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_3_7:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_3_7:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_3_7:BackgroundColor2, 255, 255, 255 );
+Edit2_3_7:Width = 125;
+Edit2_3_7:Height = 23;
+Edit2_3_7:Multiline = FALSE;
+Edit2_3_7:Password = FALSE;
+Edit2_3_7:TabStop = 1;
+ ResetImage (  Edit2_3_7  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_3_8
+        *************************************/
+MakeInstance( Edit2_3_8, Edit );
+Edit2_3_8:SessionNumber = 0;
+Edit2_3_8:Title = Edit2;
+Edit2_3_8:Visible = TRUE;
+Edit2_3_8:X = 210;
+Edit2_3_8:Y = 434;
+SetValue( Edit2_3_8:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_3_8:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_3_8:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_3_8:BackgroundColor2, 255, 255, 255 );
+Edit2_3_8:Width = 125;
+Edit2_3_8:Height = 23;
+Edit2_3_8:Multiline = FALSE;
+Edit2_3_8:Password = FALSE;
+Edit2_3_8:TabStop = 1;
+ ResetImage (  Edit2_3_8  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_12
+        *************************************/
+MakeInstance( Edit2_12, Edit );
+Edit2_12:SessionNumber = 0;
+Edit2_12:Title = Edit2;
+Edit2_12:Visible = TRUE;
+Edit2_12:X = 525;
+Edit2_12:Y = 39;
+SetValue( Edit2_12:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_12:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_12:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_12:BackgroundColor2, 255, 255, 255 );
+Edit2_12:Width = 131;
+Edit2_12:Height = 23;
+Edit2_12:Multiline = FALSE;
+Edit2_12:Password = FALSE;
+Edit2_12:TabStop = 1;
+ ResetImage (  Edit2_12  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_13
+        *************************************/
+MakeInstance( Edit2_13, Edit );
+Edit2_13:SessionNumber = 0;
+Edit2_13:Title = Edit2;
+Edit2_13:Visible = TRUE;
+Edit2_13:X = 525;
+Edit2_13:Y = 67;
+SetValue( Edit2_13:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_13:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_13:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_13:BackgroundColor2, 255, 255, 255 );
+Edit2_13:Width = 131;
+Edit2_13:Height = 23;
+Edit2_13:Multiline = FALSE;
+Edit2_13:Password = FALSE;
+Edit2_13:TabStop = 1;
+ ResetImage (  Edit2_13  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit2_14
+        *************************************/
+MakeInstance( Edit2_14, Edit );
+Edit2_14:SessionNumber = 0;
+Edit2_14:Title = Edit2;
+Edit2_14:Visible = TRUE;
+Edit2_14:X = 526;
+Edit2_14:Y = 95;
+SetValue( Edit2_14:ForegroundColor, 0, 0, 0 );
+SetValue( Edit2_14:BackgroundColor, 255, 255, 255 );
+SetValue( Edit2_14:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit2_14:BackgroundColor2, 255, 255, 255 );
+Edit2_14:Width = 131;
+Edit2_14:Height = 23;
+Edit2_14:Multiline = FALSE;
+Edit2_14:Password = FALSE;
+Edit2_14:TabStop = 1;
+ ResetImage (  Edit2_14  ); 
+
+       /*************************************
+        ****  INSTANCE: Edit1
+        *************************************/
+MakeInstance( Edit1, Edit );
+Edit1:SessionNumber = 0;
+Edit1:Title = Edit1;
+Edit1:Visible = TRUE;
+Edit1:X = 527;
+Edit1:Y = 165;
+SetValue( Edit1:ForegroundColor, 0, 0, 0 );
+SetValue( Edit1:BackgroundColor, 255, 255, 255 );
+SetValue( Edit1:ForegroundColor2, 0, 0, 0 );
+SetValue( Edit1:BackgroundColor2, 255, 255, 255 );
+Edit1:Width = 129;
+Edit1:Height = 25;
+ ResetImage (  Edit1  ); 
+
+       /*************************************
+        ****  INSTANCE: CheckBoxGroup1
+        *************************************/
+MakeInstance( CheckBoxGroup1, CheckBoxGroup );
+CheckBoxGroup1:SessionNumber = 0;
+CheckBoxGroup1:Title = CheckBoxGroup1;
+CheckBoxGroup1:Visible = FALSE;
+CheckBoxGroup1:X = 199;
+CheckBoxGroup1:Y = 92;
+SetValue( CheckBoxGroup1:ForegroundColor, 0, 0, 0 );
+SetValue( CheckBoxGroup1:BackgroundColor, 255, 255, 255 );
+SetValue( CheckBoxGroup1:ForegroundColor2, 0, 0, 0 );
+SetValue( CheckBoxGroup1:BackgroundColor2, 255, 255, 255 );
+CheckBoxGroup1:Width = 329;
+CheckBoxGroup1:Height = 267;
+ ResetImage (  CheckBoxGroup1  ); 
+
+       /*************************************
+        ****  INSTANCE: Button1
+        *************************************/
+MakeInstance( Button1, Button );
+Button1:SessionNumber = 0;
+Button1:Title = Button1;
+Button1:Visible = FALSE;
+Button1:X = 344;
+Button1:Y = 205;
+SetValue( Button1:ForegroundColor, 0, 0, 0 );
+SetValue( Button1:BackgroundColor, 236, 233, 216 );
+SetValue( Button1:ForegroundColor2, 0, 0, 0 );
+SetValue( Button1:BackgroundColor2, 255, 255, 255 );
+Button1:Width = 336;
+Button1:Height = 152;
+Button1:TabStop = 0;
+ ResetImage (  Button1  ); 
+
+       /*************************************
+        ****  INSTANCE: Button2
+        *************************************/
+MakeInstance( Button2, Button );
+Button2:SessionNumber = 0;
+Button2:Title = Button2;
+Button2:Visible = FALSE;
+Button2:X = 310;
+Button2:Y = 86;
+SetValue( Button2:ForegroundColor, 0, 0, 0 );
+SetValue( Button2:BackgroundColor, 236, 233, 216 );
+SetValue( Button2:ForegroundColor2, 0, 0, 0 );
+SetValue( Button2:BackgroundColor2, 255, 255, 255 );
+Button2:TabStop = 0;
+ ResetImage (  Button2  ); 
+
+       /*************************************
+        ****  INSTANCE: Button3
+        *************************************/
+MakeInstance( Button3, Button );
+Button3:SessionNumber = 0;
+Button3:Title = Button3;
+Button3:Visible = FALSE;
+Button3:X = 378;
+Button3:Y = 197;
+SetValue( Button3:ForegroundColor, 0, 0, 0 );
+SetValue( Button3:BackgroundColor, 236, 233, 216 );
+SetValue( Button3:ForegroundColor2, 0, 0, 0 );
+SetValue( Button3:BackgroundColor2, 255, 255, 255 );
+Button3:TabStop = 0;
+ ResetImage (  Button3  ); 
+
+       /*************************************
+        ****  INSTANCE: Button4
+        *************************************/
+MakeInstance( Button4, Button );
+Button4:SessionNumber = 0;
+Button4:Title = Button4;
+Button4:Visible = FALSE;
+Button4:X = 300;
+Button4:Y = 88;
+SetValue( Button4:ForegroundColor, 0, 0, 0 );
+SetValue( Button4:BackgroundColor, 236, 233, 216 );
+SetValue( Button4:ForegroundColor2, 0, 0, 0 );
+SetValue( Button4:BackgroundColor2, 255, 255, 255 );
+Button4:TabStop = 0;
+ ResetImage (  Button4  ); 
+
+       /*************************************
+        ****  INSTANCE: Button5
+        *************************************/
+MakeInstance( Button5, Button );
+Button5:SessionNumber = 0;
+Button5:Title = "Calcular Velocidad";
+Button5:Visible = TRUE;
+Button5:X = 441;
+Button5:Y = 220;
+SetValue( Button5:ForegroundColor, 0, 0, 0 );
+SetValue( Button5:BackgroundColor, 236, 233, 216 );
+SetValue( Button5:ForegroundColor2, 0, 0, 0 );
+SetValue( Button5:BackgroundColor2, 255, 255, 255 );
+Button5:Width = 177;
+Button5:Height = 38;
+Button5:Font = "MS Sans Serif";
+Button5:TextSize = 14;
+Button5:Bold = TRUE;
+Button5:Underline = FALSE;
+Button5:Italic = FALSE;
+Button5:StrikeOut = FALSE;
+ ResetImage (  Button5  ); 
+
+       /*************************************
+        ****  INSTANCE: Text1
+        *************************************/
+MakeInstance( Text1, Text );
+Text1:SessionNumber = 0;
+Text1:Title = Tren;
+Text1:Visible = TRUE;
+Text1:X = 392;
+Text1:Y = 19;
+SetValue( Text1:ForegroundColor, 0, 0, 0 );
+SetValue( Text1:BackgroundColor, 255, 255, 255 );
+SetValue( Text1:ForegroundColor2, 0, 0, 0 );
+SetValue( Text1:BackgroundColor2, 255, 255, 255 );
+Text1:Width = 269;
+Text1:Height = 16;
+Text1:ShowBorder = FALSE;
+Text1:Transparent = TRUE;
+Text1:Justification = CENTER;
+ ResetImage (  Text1  ); 
+
+       /*************************************
+        ****  INSTANCE: Text3
+        *************************************/
+MakeInstance( Text3, Text );
+Text3:SessionNumber = 0;
+Text3:Title = Recorrido;
+Text3:Visible = TRUE;
+Text3:X = 80;
+Text3:Y = 17;
+SetValue( Text3:ForegroundColor, 0, 0, 0 );
+SetValue( Text3:BackgroundColor, 255, 255, 255 );
+SetValue( Text3:ForegroundColor2, 0, 0, 0 );
+SetValue( Text3:BackgroundColor2, 255, 255, 255 );
+Text3:Width = 295;
+Text3:Height = 18;
+Text3:ShowBorder = FALSE;
+Text3:Transparent = TRUE;
+Text3:Justification = CENTER;
+ ResetImage (  Text3  ); 
+
+       /*************************************
+        ****  INSTANCE: Text4
+        *************************************/
+MakeInstance( Text4, Text );
+Text4:SessionNumber = 0;
+Text4:Title = "Posicion Siguiente Tren";
+Text4:Visible = TRUE;
+Text4:X = 104;
+Text4:Y = 145;
+SetValue( Text4:ForegroundColor, 0, 0, 0 );
+SetValue( Text4:BackgroundColor, 255, 255, 255 );
+SetValue( Text4:ForegroundColor2, 0, 0, 0 );
+SetValue( Text4:BackgroundColor2, 255, 255, 255 );
+Text4:Width = 117;
+Text4:Height = 28;
+Text4:Justification = CENTER;
+Text4:Transparent = TRUE;
+ ResetImage (  Text4  ); 
+
+       /*************************************
+        ****  INSTANCE: Text5
+        *************************************/
+MakeInstance( Text5, Text );
+Text5:SessionNumber = 0;
+Text5:Title = Nombre;
+Text5:Visible = TRUE;
+Text5:X = 101;
+Text5:Y = 42;
+SetValue( Text5:ForegroundColor, 0, 0, 0 );
+SetValue( Text5:BackgroundColor, 255, 255, 255 );
+SetValue( Text5:ForegroundColor2, 0, 0, 0 );
+SetValue( Text5:BackgroundColor2, 255, 255, 255 );
+Text5:Width = 113;
+Text5:Height = 17;
+Text5:Justification = CENTER;
+Text5:Transparent = TRUE;
+ ResetImage (  Text5  ); 
+
+       /*************************************
+        ****  INSTANCE: Text6
+        *************************************/
+MakeInstance( Text6, Text );
+Text6:SessionNumber = 0;
+Text6:Title = "Velocidad Minima Reglamentaria";
+Text6:Visible = TRUE;
+Text6:X = 99;
+Text6:Y = 71;
+SetValue( Text6:ForegroundColor, 0, 0, 0 );
+SetValue( Text6:BackgroundColor, 255, 255, 255 );
+SetValue( Text6:ForegroundColor2, 0, 0, 0 );
+SetValue( Text6:BackgroundColor2, 255, 255, 255 );
+Text6:Width = 117;
+Text6:Height = 31;
+Text6:Justification = CENTER;
+Text6:Transparent = TRUE;
+ ResetImage (  Text6  ); 
+
+       /*************************************
+        ****  INSTANCE: Text7
+        *************************************/
+MakeInstance( Text7, Text );
+Text7:SessionNumber = 0;
+Text7:Title = "Velocidad Maxima Reglamentaria";
+Text7:Visible = TRUE;
+Text7:X = 96;
+Text7:Y = 109;
+SetValue( Text7:ForegroundColor, 0, 0, 0 );
+SetValue( Text7:BackgroundColor, 255, 255, 255 );
+SetValue( Text7:ForegroundColor2, 0, 0, 0 );
+SetValue( Text7:BackgroundColor2, 255, 255, 255 );
+Text7:Width = 126;
+Text7:Height = 36;
+Text7:Justification = CENTER;
+Text7:Transparent = TRUE;
+ ResetImage (  Text7  ); 
+
+       /*************************************
+        ****  INSTANCE: Text8
+        *************************************/
+MakeInstance( Text8, Text );
+Text8:SessionNumber = 0;
+Text8:Title = Text8;
+Text8:Visible = FALSE;
+Text8:X = 257;
+Text8:Y = 416;
+SetValue( Text8:ForegroundColor, 0, 0, 0 );
+SetValue( Text8:BackgroundColor, 255, 255, 255 );
+SetValue( Text8:ForegroundColor2, 0, 0, 0 );
+SetValue( Text8:BackgroundColor2, 255, 255, 255 );
+Text8:Width = 100;
+Text8:Height = 25;
+ ResetImage (  Text8  ); 
+
+       /*************************************
+        ****  INSTANCE: Text2
+        *************************************/
+MakeInstance( Text2, Text );
+Text2:SessionNumber = 0;
+Text2:Title = "Velocidad Actual";
+Text2:Visible = TRUE;
+Text2:X = 381;
+Text2:Y = 42;
+SetValue( Text2:ForegroundColor, 0, 0, 0 );
+SetValue( Text2:BackgroundColor, 255, 255, 255 );
+SetValue( Text2:ForegroundColor2, 0, 0, 0 );
+SetValue( Text2:BackgroundColor2, 255, 255, 255 );
+Text2:Width = 126;
+Text2:Height = 25;
+Text2:Transparent = TRUE;
+Text2:Justification = CENTER;
+ ResetImage (  Text2  ); 
+
+       /*************************************
+        ****  INSTANCE: Text9
+        *************************************/
+MakeInstance( Text9, Text );
+Text9:SessionNumber = 0;
+Text9:Title = Estacion;
+Text9:Visible = TRUE;
+Text9:X = 174;
+Text9:Y = 189;
+SetValue( Text9:ForegroundColor, 0, 0, 0 );
+SetValue( Text9:BackgroundColor, 255, 255, 255 );
+SetValue( Text9:ForegroundColor2, 0, 0, 0 );
+SetValue( Text9:BackgroundColor2, 255, 255, 255 );
+Text9:Width = 100;
+Text9:Height = 17;
+Text9:Transparent = TRUE;
+Text9:Justification = CENTER;
+ ResetImage (  Text9  ); 
+
+       /*************************************
+        ****  INSTANCE: Text10
+        *************************************/
+MakeInstance( Text10, Text );
+Text10:SessionNumber = 0;
+Text10:Title = Nombre;
+Text10:Visible = TRUE;
+Text10:X = 124;
+Text10:Y = 211;
+SetValue( Text10:ForegroundColor, 0, 0, 0 );
+SetValue( Text10:BackgroundColor, 255, 255, 255 );
+SetValue( Text10:ForegroundColor2, 0, 0, 0 );
+SetValue( Text10:BackgroundColor2, 255, 255, 255 );
+Text10:Width = 61;
+Text10:Height = 16;
+Text10:Justification = CENTER;
+Text10:Transparent = TRUE;
+ ResetImage (  Text10  ); 
+
+       /*************************************
+        ****  INSTANCE: Text10_4
+        *************************************/
+MakeInstance( Text10_4, Text );
+Text10_4:SessionNumber = 0;
+Text10_4:Title = Posicion;
+Text10_4:Visible = TRUE;
+Text10_4:X = 125;
+Text10_4:Y = 240;
+SetValue( Text10_4:ForegroundColor, 0, 0, 0 );
+SetValue( Text10_4:BackgroundColor, 255, 255, 255 );
+SetValue( Text10_4:ForegroundColor2, 0, 0, 0 );
+SetValue( Text10_4:BackgroundColor2, 255, 255, 255 );
+Text10_4:Width = 65;
+Text10_4:Height = 16;
+Text10_4:Justification = CENTER;
+Text10_4:Transparent = TRUE;
+ ResetImage (  Text10_4  ); 
+
+       /*************************************
+        ****  INSTANCE: Text11
+        *************************************/
+MakeInstance( Text11, Text );
+Text11:SessionNumber = 0;
+Text11:Title = Semaforo;
+Text11:Visible = TRUE;
+Text11:X = 177;
+Text11:Y = 292;
+SetValue( Text11:ForegroundColor, 0, 0, 0 );
+SetValue( Text11:BackgroundColor, 255, 255, 255 );
+SetValue( Text11:ForegroundColor2, 0, 0, 0 );
+SetValue( Text11:BackgroundColor2, 255, 255, 255 );
+Text11:Width = 100;
+Text11:Height = 16;
+Text11:Transparent = TRUE;
+Text11:Justification = CENTER;
+ ResetImage (  Text11  ); 
+
+       /*************************************
+        ****  INSTANCE: Text12
+        *************************************/
+MakeInstance( Text12, Text );
+Text12:SessionNumber = 0;
+Text12:Title = Color;
+Text12:Visible = TRUE;
+Text12:X = 119;
+Text12:Y = 314;
+SetValue( Text12:ForegroundColor, 0, 0, 0 );
+SetValue( Text12:BackgroundColor, 255, 255, 255 );
+SetValue( Text12:ForegroundColor2, 0, 0, 0 );
+SetValue( Text12:BackgroundColor2, 255, 255, 255 );
+Text12:Width = 68;
+Text12:Height = 16;
+Text12:Justification = CENTER;
+Text12:Transparent = TRUE;
+ ResetImage (  Text12  ); 
+
+       /*************************************
+        ****  INSTANCE: Text13
+        *************************************/
+MakeInstance( Text13, Text );
+Text13:SessionNumber = 0;
+Text13:Title = NULL;
+Text13:Visible = TRUE;
+Text13:X = 104;
+Text13:Y = 276;
+SetValue( Text13:ForegroundColor, 0, 0, 0 );
+SetValue( Text13:BackgroundColor, 255, 255, 255 );
+SetValue( Text13:ForegroundColor2, 0, 0, 0 );
+SetValue( Text13:BackgroundColor2, 255, 255, 255 );
+Text13:Width = 258;
+Text13:Height = 7;
+Text13:Transparent = TRUE;
+Text13:Justification = CENTER;
+ ResetImage (  Text13  ); 
+
+       /*************************************
+        ****  INSTANCE: Text14
+        *************************************/
+MakeInstance( Text14, Text );
+Text14:SessionNumber = 0;
+Text14:Title = Curva;
+Text14:Visible = TRUE;
+Text14:X = 180;
+Text14:Y = 362;
+SetValue( Text14:ForegroundColor, 0, 0, 0 );
+SetValue( Text14:BackgroundColor, 255, 255, 255 );
+SetValue( Text14:ForegroundColor2, 0, 0, 0 );
+SetValue( Text14:BackgroundColor2, 255, 255, 255 );
+Text14:Width = 100;
+Text14:Height = 17;
+Text14:Transparent = TRUE;
+Text14:Justification = CENTER;
+ ResetImage (  Text14  ); 
+
+       /*************************************
+        ****  INSTANCE: Text15
+        *************************************/
+MakeInstance( Text15, Text );
+Text15:SessionNumber = 0;
+Text15:Title = "Posicion Inicio";
+Text15:Visible = TRUE;
+Text15:X = 111;
+Text15:Y = 379;
+SetValue( Text15:ForegroundColor, 0, 0, 0 );
+SetValue( Text15:BackgroundColor, 255, 255, 255 );
+SetValue( Text15:ForegroundColor2, 0, 0, 0 );
+SetValue( Text15:BackgroundColor2, 255, 255, 255 );
+Text15:Width = 80;
+Text15:Height = 25;
+Text15:Justification = CENTER;
+Text15:Transparent = TRUE;
+ ResetImage (  Text15  ); 
+
+       /*************************************
+        ****  INSTANCE: Text15_9
+        *************************************/
+MakeInstance( Text15_9, Text );
+Text15_9:SessionNumber = 0;
+Text15_9:Title = "Posicion Fin";
+Text15_9:Visible = TRUE;
+Text15_9:X = 115;
+Text15_9:Y = 414;
+SetValue( Text15_9:ForegroundColor, 0, 0, 0 );
+SetValue( Text15_9:BackgroundColor, 255, 255, 255 );
+SetValue( Text15_9:ForegroundColor2, 0, 0, 0 );
+SetValue( Text15_9:BackgroundColor2, 255, 255, 255 );
+Text15_9:Width = 80;
+Text15_9:Height = 25;
+Text15_9:Justification = CENTER;
+Text15_9:Transparent = TRUE;
+ ResetImage (  Text15_9  ); 
+
+       /*************************************
+        ****  INSTANCE: Text15_10
+        *************************************/
+MakeInstance( Text15_10, Text );
+Text15_10:SessionNumber = 0;
+Text15_10:Title = Radio;
+Text15_10:Visible = TRUE;
+Text15_10:X = 113;
+Text15_10:Y = 441;
+SetValue( Text15_10:ForegroundColor, 0, 0, 0 );
+SetValue( Text15_10:BackgroundColor, 255, 255, 255 );
+SetValue( Text15_10:ForegroundColor2, 0, 0, 0 );
+SetValue( Text15_10:BackgroundColor2, 255, 255, 255 );
+Text15_10:Width = 80;
+Text15_10:Height = 16;
+Text15_10:Justification = CENTER;
+Text15_10:Transparent = TRUE;
+ ResetImage (  Text15_10  ); 
+
+       /*************************************
+        ****  INSTANCE: Text16
+        *************************************/
+MakeInstance( Text16, Text );
+Text16:SessionNumber = 0;
+Text16:Title = Clima;
+Text16:Visible = TRUE;
+Text16:X = 108;
+Text16:Y = 483;
+SetValue( Text16:ForegroundColor, 0, 0, 0 );
+SetValue( Text16:BackgroundColor, 255, 255, 255 );
+SetValue( Text16:ForegroundColor2, 0, 0, 0 );
+SetValue( Text16:BackgroundColor2, 255, 255, 255 );
+Text16:Width = 100;
+Text16:Height = 17;
+Text16:Justification = CENTER;
+Text16:Transparent = TRUE;
+ ResetImage (  Text16  ); 
+
+       /*************************************
+        ****  INSTANCE: Text17
+        *************************************/
+MakeInstance( Text17, Text );
+Text17:SessionNumber = 0;
+Text17:Title = Posicion;
+Text17:Visible = TRUE;
+Text17:X = 385;
+Text17:Y = 72;
+SetValue( Text17:ForegroundColor, 0, 0, 0 );
+SetValue( Text17:BackgroundColor, 255, 255, 255 );
+SetValue( Text17:ForegroundColor2, 0, 0, 0 );
+SetValue( Text17:BackgroundColor2, 255, 255, 255 );
+Text17:Width = 100;
+Text17:Height = 25;
+Text17:Transparent = TRUE;
+Text17:Justification = CENTER;
+ ResetImage (  Text17  ); 
+
+       /*************************************
+        ****  INSTANCE: Text18
+        *************************************/
+MakeInstance( Text18, Text );
+Text18:SessionNumber = 0;
+Text18:Title = Capacidad;
+Text18:Visible = TRUE;
+Text18:X = 395;
+Text18:Y = 96;
+SetValue( Text18:ForegroundColor, 0, 0, 0 );
+SetValue( Text18:BackgroundColor, 255, 255, 255 );
+SetValue( Text18:ForegroundColor2, 0, 0, 0 );
+SetValue( Text18:BackgroundColor2, 255, 255, 255 );
+Text18:Width = 100;
+Text18:Height = 25;
+Text18:Justification = CENTER;
+Text18:Transparent = TRUE;
+ ResetImage (  Text18  ); 
+
+       /*************************************
+        ****  INSTANCE: Text19
+        *************************************/
+MakeInstance( Text19, Text );
+Text19:SessionNumber = 0;
+Text19:Title = "Estado de Puertas";
+Text19:Visible = TRUE;
+Text19:X = 404;
+Text19:Y = 127;
+SetValue( Text19:ForegroundColor, 0, 0, 0 );
+SetValue( Text19:BackgroundColor, 255, 255, 255 );
+SetValue( Text19:ForegroundColor2, 0, 0, 0 );
+SetValue( Text19:BackgroundColor2, 255, 255, 255 );
+Text19:Width = 100;
+Text19:Height = 25;
+Text19:Justification = CENTER;
+Text19:Transparent = TRUE;
+ ResetImage (  Text19  ); 
+
+       /*************************************
+        ****  INSTANCE: Text20
+        *************************************/
+MakeInstance( Text20, Text );
+Text20:SessionNumber = 0;
+Text20:Title = "Cantidad de vagones";
+Text20:Visible = TRUE;
+Text20:X = 403;
+Text20:Y = 163;
+SetValue( Text20:ForegroundColor, 0, 0, 0 );
+SetValue( Text20:BackgroundColor, 255, 255, 255 );
+SetValue( Text20:ForegroundColor2, 0, 0, 0 );
+SetValue( Text20:BackgroundColor2, 255, 255, 255 );
+Text20:Width = 100;
+Text20:Height = 31;
+Text20:Justification = CENTER;
+Text20:Transparent = TRUE;
+ ResetImage (  Text20  ); 
+
+       /*************************************
+        ****  INSTANCE: Text21
+        *************************************/
+MakeInstance( Text21, Text );
+Text21:SessionNumber = 0;
+Text21:Title = NULL;
+Text21:Visible = TRUE;
+Text21:X = 369;
+Text21:Y = 191;
+SetValue( Text21:ForegroundColor, 0, 0, 0 );
+SetValue( Text21:BackgroundColor, 255, 255, 255 );
+SetValue( Text21:ForegroundColor2, 0, 0, 0 );
+SetValue( Text21:BackgroundColor2, 255, 255, 255 );
+Text21:Width = 17;
+Text21:Height = 25;
+Text21:Transparent = TRUE;
+Text21:Justification = CENTER;
+ ResetImage (  Text21  ); 
+
+       /*************************************
+        ****  INSTANCE: Text22
+        *************************************/
+MakeInstance( Text22, Text );
+Text22:SessionNumber = 0;
+Text22:Title = "Reducir Velocidad a 30";
+Text22:Visible = TRUE;
+Text22:X = 408;
+Text22:Y = 279;
+SetValue( Text22:ForegroundColor, 0, 0, 0 );
+SetValue( Text22:BackgroundColor, 255, 255, 255 );
+SetValue( Text22:ForegroundColor2, 0, 0, 0 );
+SetValue( Text22:BackgroundColor2, 255, 255, 255 );
+Text22:Width = 242;
+Text22:Height = 72;
+Text22:Font = "MS Sans Serif";
+Text22:TextSize = 24;
+Text22:Bold = TRUE;
+Text22:Underline = FALSE;
+Text22:Italic = FALSE;
+Text22:StrikeOut = FALSE;
+Text22:Justification = CENTER;
+Text22:Transparent = TRUE;
+ ResetImage (  Text22  ); 
+
+       /*************************************
+        ****  INSTANCE: Transcript1
+        *************************************/
+MakeInstance( Transcript1, Transcript );
+Transcript1:SessionNumber = 0;
+Transcript1:Title = Transcript1;
+Transcript1:Visible = FALSE;
+Transcript1:X = 133;
+Transcript1:Y = 80;
+SetValue( Transcript1:ForegroundColor, 0, 0, 0 );
+SetValue( Transcript1:BackgroundColor, 255, 255, 255 );
+SetValue( Transcript1:ForegroundColor2, 0, 0, 0 );
+SetValue( Transcript1:BackgroundColor2, 255, 255, 255 );
+Transcript1:Width = 150;
+Transcript1:Height = 120;
+ ResetImage (  Transcript1  ); 
+
+       /*************************************
+        ****  INSTANCE: Transcript2
+        *************************************/
+MakeInstance( Transcript2, Transcript );
+Transcript2:SessionNumber = 0;
+Transcript2:Title = Transcript2;
+Transcript2:Visible = TRUE;
+Transcript2:X = 386;
+Transcript2:Y = 189;
+SetValue( Transcript2:ForegroundColor, 0, 0, 0 );
+SetValue( Transcript2:BackgroundColor, 255, 255, 255 );
+SetValue( Transcript2:ForegroundColor2, 0, 0, 0 );
+SetValue( Transcript2:BackgroundColor2, 255, 255, 255 );
+Transcript2:Width = 1;
+Transcript2:Height = 16;
+ ResetImage (  Transcript2  ); 
+
+       /*************************************
+        ****  INSTANCE: Bitmap1
+        *************************************/
+MakeInstance( Bitmap1, Bitmap );
+Bitmap1:SessionNumber = 0;
+Bitmap1:Title = Bitmap1;
+Bitmap1:Visible = FALSE;
+Bitmap1:X = 173;
+Bitmap1:Y = 43;
+SetValue( Bitmap1:ForegroundColor, 0, 0, 0 );
+SetValue( Bitmap1:BackgroundColor, 255, 255, 255 );
+SetValue( Bitmap1:ForegroundColor2, 0, 0, 0 );
+SetValue( Bitmap1:BackgroundColor2, 255, 255, 255 );
+Bitmap1:Width = 150;
+Bitmap1:Height = 120;
+ ResetImage (  Bitmap1  ); 
+
+       /*************************************
+        ****  INSTANCE: Bitmap2
+        *************************************/
+MakeInstance( Bitmap2, Bitmap );
+Bitmap2:SessionNumber = 0;
+Bitmap2:Title = Bitmap2;
+Bitmap2:Visible = TRUE;
+Bitmap2:X = 95;
+Bitmap2:Y = 11;
+SetValue( Bitmap2:ForegroundColor, 0, 0, 0 );
+SetValue( Bitmap2:BackgroundColor, 255, 255, 255 );
+SetValue( Bitmap2:ForegroundColor2, 0, 0, 0 );
+SetValue( Bitmap2:BackgroundColor2, 255, 255, 255 );
+Bitmap2:Width = 273;
+Bitmap2:Height = 2;
+ ResetImage (  Bitmap2  ); 
+
+       /*************************************
+        ****  INSTANCE: Bitmap3
+        *************************************/
+MakeInstance( Bitmap3, Bitmap );
+Bitmap3:SessionNumber = 0;
+Bitmap3:Title = Bitmap3;
+Bitmap3:Visible = TRUE;
+Bitmap3:X = 367;
+Bitmap3:Y = 12;
+SetValue( Bitmap3:ForegroundColor, 0, 0, 0 );
+SetValue( Bitmap3:BackgroundColor, 255, 255, 255 );
+SetValue( Bitmap3:ForegroundColor2, 0, 0, 0 );
+SetValue( Bitmap3:BackgroundColor2, 255, 255, 255 );
+Bitmap3:Width = 1;
+Bitmap3:Height = 427;
+ ResetImage (  Bitmap3  ); 
+
+       /*************************************
+        ****  INSTANCE: Bitmap4
+        *************************************/
+MakeInstance( Bitmap4, Bitmap );
+Bitmap4:SessionNumber = 0;
+Bitmap4:Title = Bitmap4;
+Bitmap4:Visible = TRUE;
+Bitmap4:X = 109;
+Bitmap4:Y = 182;
+SetValue( Bitmap4:ForegroundColor, 0, 0, 0 );
+SetValue( Bitmap4:BackgroundColor, 255, 255, 255 );
+SetValue( Bitmap4:ForegroundColor2, 0, 0, 0 );
+SetValue( Bitmap4:BackgroundColor2, 255, 255, 255 );
+Bitmap4:Width = 243;
+Bitmap4:Height = 2;
+ ResetImage (  Bitmap4  ); 
+
+       /*************************************
+        ****  INSTANCE: Bitmap5
+        *************************************/
+MakeInstance( Bitmap5, Bitmap );
+Bitmap5:SessionNumber = 0;
+Bitmap5:Title = Bitmap5;
+Bitmap5:Visible = TRUE;
+Bitmap5:X = 108;
+Bitmap5:Y = 182;
+SetValue( Bitmap5:ForegroundColor, 0, 0, 0 );
+SetValue( Bitmap5:BackgroundColor, 255, 255, 255 );
+SetValue( Bitmap5:ForegroundColor2, 0, 0, 0 );
+SetValue( Bitmap5:BackgroundColor2, 255, 255, 255 );
+Bitmap5:Width = 1;
+Bitmap5:Height = 94;
+ ResetImage (  Bitmap5  ); 
+
+       /*************************************
+        ****  INSTANCE: Bitmap6
+        *************************************/
+MakeInstance( Bitmap6, Bitmap );
+Bitmap6:SessionNumber = 0;
+Bitmap6:Title = Bitmap6;
+Bitmap6:Visible = TRUE;
+Bitmap6:X = 108;
+Bitmap6:Y = 275;
+SetValue( Bitmap6:ForegroundColor, 0, 0, 0 );
+SetValue( Bitmap6:BackgroundColor, 255, 255, 255 );
+SetValue( Bitmap6:ForegroundColor2, 0, 0, 0 );
+SetValue( Bitmap6:BackgroundColor2, 255, 255, 255 );
+Bitmap6:Width = 246;
+Bitmap6:Height = 2;
+ ResetImage (  Bitmap6  ); 
+
+       /*************************************
+        ****  INSTANCE: Bitmap7
+        *************************************/
+MakeInstance( Bitmap7, Bitmap );
+Bitmap7:SessionNumber = 0;
+Bitmap7:Title = Bitmap7;
+Bitmap7:Visible = TRUE;
+Bitmap7:X = 353;
+Bitmap7:Y = 182;
+SetValue( Bitmap7:ForegroundColor, 0, 0, 0 );
+SetValue( Bitmap7:BackgroundColor, 255, 255, 255 );
+SetValue( Bitmap7:ForegroundColor2, 0, 0, 0 );
+SetValue( Bitmap7:BackgroundColor2, 255, 255, 255 );
+Bitmap7:Width = 1;
+Bitmap7:Height = 94;
+ ResetImage (  Bitmap7  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing1
+        *************************************/
+MakeInstance( Drawing1, Drawing );
+Drawing1:SessionNumber = 0;
+Drawing1:Title = Drawing1;
+Drawing1:Visible = FALSE;
+Drawing1:X = 117;
+Drawing1:Y = 86;
+SetValue( Drawing1:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing1:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing1:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing1:BackgroundColor2, 255, 255, 255 );
+Drawing1:Width = 150;
+Drawing1:Height = 120;
+ ResetImage (  Drawing1  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing2
+        *************************************/
+MakeInstance( Drawing2, Drawing );
+Drawing2:SessionNumber = 0;
+Drawing2:Title = Drawing2;
+Drawing2:Visible = TRUE;
+Drawing2:X = 94;
+Drawing2:Y = 11;
+SetValue( Drawing2:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing2:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing2:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing2:BackgroundColor2, 255, 255, 255 );
+Drawing2:Width = 1;
+Drawing2:Height = 404;
+Drawing2:Transparent = TRUE;
+ ResetImage (  Drawing2  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing3
+        *************************************/
+MakeInstance( Drawing3, Drawing );
+Drawing3:SessionNumber = 0;
+Drawing3:Title = Drawing3;
+Drawing3:Visible = TRUE;
+Drawing3:X = 108;
+Drawing3:Y = 282;
+SetValue( Drawing3:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing3:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing3:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing3:BackgroundColor2, 255, 255, 255 );
+Drawing3:Width = 245;
+Drawing3:Height = 2;
+ ResetImage (  Drawing3  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing4
+        *************************************/
+MakeInstance( Drawing4, Drawing );
+Drawing4:SessionNumber = 0;
+Drawing4:Title = Drawing4;
+Drawing4:Visible = TRUE;
+Drawing4:X = 353;
+Drawing4:Y = 282;
+SetValue( Drawing4:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing4:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing4:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing4:BackgroundColor2, 255, 255, 255 );
+Drawing4:Width = 1;
+Drawing4:Height = 65;
+Drawing4:Transparent = TRUE;
+ ResetImage (  Drawing4  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing5
+        *************************************/
+MakeInstance( Drawing5, Drawing );
+Drawing5:SessionNumber = 0;
+Drawing5:Title = Drawing5;
+Drawing5:Visible = TRUE;
+Drawing5:X = 108;
+Drawing5:Y = 283;
+SetValue( Drawing5:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing5:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing5:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing5:BackgroundColor2, 255, 255, 255 );
+Drawing5:Width = 1;
+Drawing5:Height = 65;
+ ResetImage (  Drawing5  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing6
+        *************************************/
+MakeInstance( Drawing6, Drawing );
+Drawing6:SessionNumber = 0;
+Drawing6:Title = Drawing6;
+Drawing6:Visible = TRUE;
+Drawing6:X = 108;
+Drawing6:Y = 347;
+SetValue( Drawing6:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing6:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing6:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing6:BackgroundColor2, 255, 255, 255 );
+Drawing6:Width = 246;
+Drawing6:Height = 1;
+ ResetImage (  Drawing6  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing7
+        *************************************/
+MakeInstance( Drawing7, Drawing );
+Drawing7:SessionNumber = 0;
+Drawing7:Title = Drawing7;
+Drawing7:Visible = TRUE;
+Drawing7:X = 109;
+Drawing7:Y = 356;
+SetValue( Drawing7:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing7:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing7:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing7:BackgroundColor2, 255, 255, 255 );
+Drawing7:Width = 245;
+Drawing7:Height = 1;
+ ResetImage (  Drawing7  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing8
+        *************************************/
+MakeInstance( Drawing8, Drawing );
+Drawing8:SessionNumber = 0;
+Drawing8:Title = Drawing8;
+Drawing8:Visible = TRUE;
+Drawing8:X = 109;
+Drawing8:Y = 356;
+SetValue( Drawing8:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing8:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing8:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing8:BackgroundColor2, 255, 255, 255 );
+Drawing8:Width = 1;
+Drawing8:Height = 109;
+ ResetImage (  Drawing8  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing9
+        *************************************/
+MakeInstance( Drawing9, Drawing );
+Drawing9:SessionNumber = 0;
+Drawing9:Title = Drawing9;
+Drawing9:Visible = TRUE;
+Drawing9:X = 353;
+Drawing9:Y = 354;
+SetValue( Drawing9:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing9:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing9:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing9:BackgroundColor2, 255, 255, 255 );
+Drawing9:Width = 1;
+Drawing9:Height = 114;
+ ResetImage (  Drawing9  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing10
+        *************************************/
+MakeInstance( Drawing10, Drawing );
+Drawing10:SessionNumber = 0;
+Drawing10:Title = Drawing10;
+Drawing10:Visible = TRUE;
+Drawing10:X = 110;
+Drawing10:Y = 467;
+SetValue( Drawing10:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing10:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing10:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing10:BackgroundColor2, 255, 255, 255 );
+Drawing10:Width = 243;
+Drawing10:Height = 1;
+ ResetImage (  Drawing10  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing11
+        *************************************/
+MakeInstance( Drawing11, Drawing );
+Drawing11:SessionNumber = 0;
+Drawing11:Title = Drawing11;
+Drawing11:Visible = TRUE;
+Drawing11:X = 109;
+Drawing11:Y = 392;
+SetValue( Drawing11:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing11:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing11:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing11:BackgroundColor2, 255, 255, 255 );
+Drawing11:Width = 1;
+Drawing11:Height = 76;
+ ResetImage (  Drawing11  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing12
+        *************************************/
+MakeInstance( Drawing12, Drawing );
+Drawing12:SessionNumber = 0;
+Drawing12:Title = Drawing12;
+Drawing12:Visible = TRUE;
+Drawing12:X = 94;
+Drawing12:Y = 386;
+SetValue( Drawing12:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing12:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing12:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing12:BackgroundColor2, 255, 255, 255 );
+Drawing12:Width = 1;
+Drawing12:Height = 120;
+ ResetImage (  Drawing12  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing13
+        *************************************/
+MakeInstance( Drawing13, Drawing );
+Drawing13:SessionNumber = 0;
+Drawing13:Title = Drawing13;
+Drawing13:Visible = TRUE;
+Drawing13:X = 367;
+Drawing13:Y = 392;
+SetValue( Drawing13:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing13:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing13:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing13:BackgroundColor2, 255, 255, 255 );
+Drawing13:Width = 1;
+Drawing13:Height = 120;
+ ResetImage (  Drawing13  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing14
+        *************************************/
+MakeInstance( Drawing14, Drawing );
+Drawing14:SessionNumber = 0;
+Drawing14:Title = Drawing14;
+Drawing14:Visible = TRUE;
+Drawing14:X = 95;
+Drawing14:Y = 512;
+SetValue( Drawing14:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing14:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing14:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing14:BackgroundColor2, 255, 255, 255 );
+Drawing14:Width = 273;
+Drawing14:Height = 1;
+ ResetImage (  Drawing14  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing15
+        *************************************/
+MakeInstance( Drawing15, Drawing );
+Drawing15:SessionNumber = 0;
+Drawing15:Title = Drawing15;
+Drawing15:Visible = TRUE;
+Drawing15:X = 94;
+Drawing15:Y = 393;
+SetValue( Drawing15:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing15:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing15:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing15:BackgroundColor2, 255, 255, 255 );
+Drawing15:Width = 1;
+Drawing15:Height = 120;
+ ResetImage (  Drawing15  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing16
+        *************************************/
+MakeInstance( Drawing16, Drawing );
+Drawing16:SessionNumber = 0;
+Drawing16:Title = Drawing16;
+Drawing16:Visible = TRUE;
+Drawing16:X = 386;
+Drawing16:Y = 11;
+SetValue( Drawing16:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing16:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing16:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing16:BackgroundColor2, 255, 255, 255 );
+Drawing16:Width = 1;
+Drawing16:Height = 192;
+ ResetImage (  Drawing16  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing17
+        *************************************/
+MakeInstance( Drawing17, Drawing );
+Drawing17:SessionNumber = 0;
+Drawing17:Title = Drawing17;
+Drawing17:Visible = TRUE;
+Drawing17:X = 386;
+Drawing17:Y = 11;
+SetValue( Drawing17:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing17:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing17:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing17:BackgroundColor2, 255, 255, 255 );
+Drawing17:Width = 292;
+Drawing17:Height = 2;
+ ResetImage (  Drawing17  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing18
+        *************************************/
+MakeInstance( Drawing18, Drawing );
+Drawing18:SessionNumber = 0;
+Drawing18:Title = Drawing18;
+Drawing18:Visible = TRUE;
+Drawing18:X = 677;
+Drawing18:Y = 11;
+SetValue( Drawing18:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing18:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing18:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing18:BackgroundColor2, 255, 255, 255 );
+Drawing18:Width = 1;
+Drawing18:Height = 194;
+ ResetImage (  Drawing18  ); 
+
+       /*************************************
+        ****  INSTANCE: Drawing19
+        *************************************/
+MakeInstance( Drawing19, Drawing );
+Drawing19:SessionNumber = 0;
+Drawing19:Title = Drawing19;
+Drawing19:Visible = TRUE;
+Drawing19:X = 385;
+Drawing19:Y = 204;
+SetValue( Drawing19:ForegroundColor, 0, 0, 0 );
+SetValue( Drawing19:BackgroundColor, 255, 255, 255 );
+SetValue( Drawing19:ForegroundColor2, 0, 0, 0 );
+SetValue( Drawing19:BackgroundColor2, 255, 255, 255 );
+Drawing19:Width = 292;
+Drawing19:Height = 1;
+ ResetImage (  Drawing19  ); 
+
+
+
+/*********************************************************/
+/**         ALL RULES ARE SAVED BELOW             **/
+/*********************************************************/
+
+
+
+/*********************************************************/
+/**         ALL GOALS ARE SAVED BELOW             **/
+/*********************************************************/
