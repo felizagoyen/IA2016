@@ -1935,12 +1935,124 @@ MakeRule( R4.DisminuirAVelocidadDeCurva, [Tren_Actual|Tren Recorrido_Actual|Reco
         *************************************/
 MakeRule( R5.DetenerseEnEstacion, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
     {
-    Tren_Actual:Velocidad_Actual > Recorrido_Actual:Proxima_Curva:Velocidad;
-    Tren_Actual:Distancia_A_Proxima_Curva > Recorrido_Actual:Proxima_Curva:Distancia_Minima_Frenado;
+    Tren_Actual:Velocidad_Actual > 0;
+    Tren_Actual:Distancia_A_Proxima_Estacion <= Recorrido_Actual:Proxima_Estacion:Distancia_Minima_Frenado;
     },
-    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a "
-                                               # Recorrido_Actual:Proxima_Curva:Velocidad ) );
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 0" ) );
 
+       /*************************************
+        ****  RULE: R6.DisminurVelocidadPorFormacionCercana
+        *************************************/
+MakeRule( R6.DisminurVelocidadPorFormacionCercana, [Tren_Actual|Tren],
+    {
+    Tren_Actual:Velocidad_Actual > 12;
+    Tren_Actual:Distancia_A_Proxima_Formacion < 1000;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 12" ) );
+
+       /*************************************
+        ****  RULE: R7.DetenerFormacionPorFormacionCercana
+        *************************************/
+MakeRule( R7.DetenerFormacionPorFormacionCercana, [Tren_Actual|Tren],
+    {
+    Tren_Actual:Distancia_A_Proxima_Formacion < 500;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Detención inmediata de la formación" ) );
+
+       /*************************************
+        ****  RULE: R8.DisminuirVelocidadSemaforoAmarillo
+        *************************************/
+MakeRule( R8.DisminuirVelocidadSemaforoAmarillo, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual > 12;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Amarillo;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 12" ) );
+
+       /*************************************
+        ****  RULE: R9.MantenerVelocidadSemaforoAmarillo
+        *************************************/
+MakeRule( R9.MantenerVelocidadSemaforoAmarillo, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual #= 12;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Amarillo;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Mantenga velocidad" ) );
+
+       /*************************************
+        ****  RULE: R10.AumentarVelocidadAVMP
+        *************************************/
+MakeRule( R10.AumentarVelocidadAVMP, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual < Recorrido_Actual:Maxima_Velocidad_Permitida;
+    Tren_Actual:Distancia_A_Proxima_Formacion >= 1000;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Verde;
+    Tren_Actual:Distancia_A_Proxima_Curva >= Recorrido_Actual:Proxima_Curva:Distancia_Minima_Frenado;
+    Tren_Actual:Transitando_Curva #= Falso;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a " # Recorrido_Actual:Maxima_Velocidad_Permitida ) );
+
+       /*************************************
+        ****  RULE: R11.AumentarVelocidadSaliendoDeEstacion
+        *************************************/
+MakeRule( R11.AumentarVelocidadSaliendoDeEstacion, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual #= 0;
+    Tren_Actual:Estado_Puertas #= Cerradas;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Verde;
+    Tren_Actual:Distancia_A_Proxima_Estacion #= 0;
+    Tren_Actual:Transitando_Curva #= Falso;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a " # Recorrido_Actual:Maxima_Velocidad_Permitida ) );
+
+       /*************************************
+        ****  RULE: R12.AumentarVelocidadSaliendoDeEstacionAmarillo
+        *************************************/
+MakeRule( R12.AumentarVelocidadSaliendoDeEstacionAmarillo, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual #= 0;
+    Tren_Actual:Estado_Puertas #= Cerradas;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Amarillo;
+    Tren_Actual:Distancia_A_Proxima_Estacion #= 0;
+    Tren_Actual:Transitando_Curva #= Falso;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a 12" ) );
+
+       /*************************************
+        ****  RULE: R13.AumentarVelocidadAVMinP
+        *************************************/
+MakeRule( R13.AumentarVelocidadAVMinP, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual < Recorrido_Actual:Velocidad_Minima_Permitida;
+    Tren_Actual:Distancia_A_Proxima_Formacion > 1000;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Verde;
+    Tren_Actual:Distancia_A_Proxima_Estacion > Recorrido_Actual:Proxima_Estacion:Distacia_Minima_Frenado;
+    Tren_Actual:Distancia_A_Proxima_Curva > Recorrido_Actual:Proxima_Curva:Distacia_Minima_Frenado;
+    Tren_Actual:Transitando_Curva #= Falso;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a " # Recorrido_Actual:Velocidad_Minima_Permitda ) );
+
+       /*************************************
+        ****  RULE: R14.AumentarVelocidadAVelocidadDeCurva
+        *************************************/
+MakeRule( R14.AumentarVelocidadAVelocidadDeCurva, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual < Recorrido_Actual:Proxima_Curva:Velocidad;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Verde;
+    Tren_Actual:Transitando_Curva #= Verdadero;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a " # Recorrido_Actual:Proxima_Curva:Velocidad ) );
+
+       /*************************************
+        ****  RULE: R15.AumentarVelocidadAVelocidadDeCurva
+        *************************************/
+MakeRule( R15.AumentarVelocidadAVelocidadDeCurva, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual #= Recorrido_Actual:Proxima_Curva:Velocidad;
+    Recorrido_Actual:Proximo_Semaforo:Color #= Verde;
+    Tren_Actual:Transitando_Curva #= Verdadero;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Mantenga velocidad" ) );
 
 /*********************************************************/
 /**         ALL GOALS ARE SAVED BELOW             **/
