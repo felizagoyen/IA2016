@@ -1,6 +1,7 @@
 
 
 
+
 /*********************************************************/
 /**         ALL FUNCTIONS ARE SAVED BELOW             **/
 /*********************************************************/
@@ -105,6 +106,16 @@ SetValue(Recorrido_Actual:Proxima_Estacion:Distancia_Minima_Frenado,
 MakeFunction( distancia_min_frenado_curva, [],
 SetValue(Recorrido_Actual:Proxima_Estacion:Distancia_Minima_Frenado, 
     (Tren_Actual:Velocidad - Recorrido_Actual:Proxima_Curva:Velocidad) * 10 / (Recorrido_Actual:Condicion_Climatica:Factor * Tren_Actual:Capacidad:Factor)) );
+
+       /*************************************
+        ****  FUNCTION: calcular_accion_sugerida
+        *************************************/
+MakeFunction( calcular_accion_sugerida, [],
+{
+SetValue(Tren_Actual:Velocidad_Actual, Edit2);
+SetValue(Recorrido_Actual:Velocidad_Maxima_Permitida, 120);
+PostMessage("asd - " # Tren_Actual:Velocidad_Actual);
+} );
 
 
 
@@ -390,6 +401,7 @@ MakeInstance( Condicion_Climatica_Actual, Condicion_Climatica );
 MakeInstance( Tren_Actual, Tren );
 Tren_Actual:Recorrido = Recorrido_Actual;
 Tren_Actual:Capacidad = Capacidad_Tren_Actual;
+Tren_Actual:Velocidad_Actual = Edit2;
 
        /*************************************
         ****  INSTANCE: Recorrido_Actual
@@ -399,6 +411,7 @@ Recorrido_Actual:Proxima_Curva = Proxima_Curva;
 Recorrido_Actual:Estacion = Proxima_Estacion;
 Recorrido_Actual:Semaforo = Proximo_Semaforo;
 Recorrido_Actual:Condicion_Climantica = Condicion_Climatica_Actual;
+Recorrido_Actual:Velocidad_Maxima_Permitida = 120;
 
        /*************************************
         ****  INSTANCE: Capacidad_Tren_Actual
@@ -914,6 +927,7 @@ Button5:Bold = TRUE;
 Button5:Underline = FALSE;
 Button5:Italic = FALSE;
 Button5:StrikeOut = FALSE;
+Button5:Action = calcular_accion_sugerida;
  ResetImage (  Button5  ); 
 
        /*************************************
@@ -1379,8 +1393,8 @@ MakeInstance( Text22, Text );
 Text22:SessionNumber = 0;
 Text22:Title = "Reducir Velocidad a 30";
 Text22:Visible = TRUE;
-Text22:X = 408;
-Text22:Y = 279;
+Text22:X = 421;
+Text22:Y = 277;
 SetValue( Text22:ForegroundColor, 0, 0, 0 );
 SetValue( Text22:BackgroundColor, 255, 255, 255 );
 SetValue( Text22:ForegroundColor2, 0, 0, 0 );
@@ -1881,6 +1895,51 @@ Drawing19:Height = 1;
 /**         ALL RULES ARE SAVED BELOW             **/
 /*********************************************************/
 
+       /*************************************
+        ****  RULE: R1.DisminuirAVMP
+        *************************************/
+MakeRule( R1.DisminuirAVMP, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    Tren_Actual:Velocidad_Actual > Recorrido_Actual:Velocidad_Maxima_Permitida,
+    SetValue(Tren_Actual:Accion_Sugerida, "Disminuya velocidad a " # Recorrido_Actual:Velocidad_Maxima_Permitida) );
+
+       /*************************************
+        ****  RULE: R2.DetenerFormacion
+        *************************************/
+MakeRule( R2.DetenerFormacion, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    Recorrido_Actual:Proximo_Semaforo:Color #= Rojo,
+    SetValue(Tren_Actual:Accion_Sugerida = "Detención inmediata de la formación") );
+
+       /*************************************
+        ****  RULE: R3.MantenerVelocidadActual
+        *************************************/
+MakeRule( R3.MantenerVelocidadActual, [Tren_Actual|Tren],
+    {
+    Tren_Actual:Velocidad_Actual #= 0;
+    Tren_Actual:Estado_Puertas #= Abiertas;
+    Tren_Actual:Distancia_A_Proxima_Estacion #= 0;
+    },
+    SetValue(Tren_Actual:Accion_Sugerida = "Mantenga velocidad") );
+
+       /*************************************
+        ****  RULE: R4.DisminuirAVelocidadDeCurva
+        *************************************/
+MakeRule( R4.DisminuirAVelocidadDeCurva, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual > Recorrido_Actual:Proxima_Curva:Velocidad;
+    Tren_Actual:Distancia_A_Proxima_Curva > Recorrido_Actual:Proxima_Curva:Distancia_Minima_Frenado;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a "
+                                               # Recorrido_Actual:Proxima_Curva:Velocidad ) );
+       /*************************************
+        ****  RULE: R5.DetenerseEnEstacion
+        *************************************/
+MakeRule( R5.DetenerseEnEstacion, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
+    {
+    Tren_Actual:Velocidad_Actual > Recorrido_Actual:Proxima_Curva:Velocidad;
+    Tren_Actual:Distancia_A_Proxima_Curva > Recorrido_Actual:Proxima_Curva:Distancia_Minima_Frenado;
+    },
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a "
+                                               # Recorrido_Actual:Proxima_Curva:Velocidad ) );
 
 
 /*********************************************************/
