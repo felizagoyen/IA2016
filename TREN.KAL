@@ -9,158 +9,163 @@
         ****  FUNCTION: calcular_distancia_formacion
         *************************************/
 MakeFunction( calcular_distancia_formacion, [],
-SetValue(Tren_Actual:Distancia_A_Proxima_Formacion, Recorrido_Actual:Posicion_Siguiente_Tren - Tren_Actual:Posicion) );
+    SetValue( Tren_Actual:Distancia_A_Proxima_Formacion, 
+        Recorrido_Actual:Posicion_Siguiente_Tren - Tren_Actual:Posicion ) );
 
        /*************************************
         ****  FUNCTION: calcular_distancia_estacion
         *************************************/
 MakeFunction( calcular_distancia_estacion, [],
-SetValue(Tren_Actual:Distancia_A_Proxima_Estacion, Proxima_Estacion:Posicion - Tren_Actual:Posicion) );
+    SetValue( Tren_Actual:Distancia_A_Proxima_Estacion, 
+        Proxima_Estacion:Posicion - Tren_Actual:Posicion ) );
 
        /*************************************
         ****  FUNCTION: calcular_distancia_curva
         *************************************/
 MakeFunction( calcular_distancia_curva, [],
-SetValue(Tren_Actual:Distancia_A_Proxima_Curva, Proxima_Curva:Posicion_Inicio - Tren_Actual:Posicion) );
+    SetValue( Tren_Actual:Distancia_A_Proxima_Curva, 
+        Proxima_Curva:Posicion_Inicio - Tren_Actual:Posicion ) );
 
        /*************************************
         ****  FUNCTION: calcular_velocidad_curva
         *************************************/
 MakeFunction( calcular_velocidad_curva, [],
-SetValue(Proxima_Curva:Velocidad, 2.2 * Sqrt(Proxima_Curva:Radio) * Condicion_Climatica_Actual:Factor * Capacidad_Tren_Actual:Factor) );
+    SetValue( Proxima_Curva:Velocidad, 2.2 * Sqrt( Proxima_Curva:Radio )
+                                           * Condicion_Climatica_Actual:Factor
+                                           * Capacidad_Tren_Actual:Factor ) );
 
        /*************************************
         ****  FUNCTION: factor_condicion_climatica
         *************************************/
 MakeFunction( factor_condicion_climatica, [],
-{
-If Condicion_Climatica_Actual:Descripcion #= "Despejado"
-Then
-   SetValue(Condicion_Climatica_Actual:Factor, 1); 
-
-If Condicion_Climatica_Actual:Descripcion #= "Nieve"
-Then
-   SetValue(Condicion_Climatica_Actual:Factor, 0.7); 
-
-If Condicion_Climatica_Actual:Descripcion #= "Lluvia"
-Then
-   SetValue(Condicion_Climatica_Actual:Factor, 0.85); 
-
-If Condicion_Climatica_Actual:Descripcion #= "Niebla"
-Then
-   SetValue(Condicion_Climatica_Actual:Factor, 0.85);
-
-} );
+    {
+    If ( Condicion_Climatica_Actual:Descripcion #= Despejado )
+      Then SetValue( Condicion_Climatica_Actual:Factor, 1 );
+    If ( Condicion_Climatica_Actual:Descripcion #= Nieve )
+      Then SetValue( Condicion_Climatica_Actual:Factor, 0.7 );
+    If ( Condicion_Climatica_Actual:Descripcion #= Lluvia )
+      Then SetValue( Condicion_Climatica_Actual:Factor, 0.85 );
+    If ( Condicion_Climatica_Actual:Descripcion #= Niebla )
+      Then SetValue( Condicion_Climatica_Actual:Factor, 0.85 );
+    } );
 
        /*************************************
         ****  FUNCTION: factor_capacidad
         *************************************/
 MakeFunction( factor_capacidad, [],
-{
-If Capacidad_Tren_Actual:Valor >= 75
-Then
-   SetValue(Capacidad_Tren_Actual:Factor, 1); 
-
-If Capacidad_Tren_Actual:Valor < 75 And Capacidad_Tren_Actual:Valor >= 50
-Then
-   SetValue(Capacidad_Tren_Actual:Factor, 0.95); 
-
-If Capacidad_Tren_Actual:Valor < 50 And Capacidad_Tren_Actual:Valor >= 25
-Then
-   SetValue(Capacidad_Tren_Actual:Factor, 0.9); 
-
-If Capacidad_Tren_Actual:Valor < 25
-Then
-   SetValue(Capacidad_Tren_Actual:Factor, 0.85);
-
-} );
+    {
+    If ( Capacidad_Tren_Actual:Valor >= 75 )
+      Then SetValue( Capacidad_Tren_Actual:Factor, 1 );
+    If ( Capacidad_Tren_Actual:Valor < 75 And Capacidad_Tren_Actual:Valor
+             >= 50 )
+      Then SetValue( Capacidad_Tren_Actual:Factor, 0.95 );
+    If ( Capacidad_Tren_Actual:Valor < 50 And Capacidad_Tren_Actual:Valor
+             >= 25 )
+      Then SetValue( Capacidad_Tren_Actual:Factor, 0.9 );
+    If ( Capacidad_Tren_Actual:Valor < 25 )
+      Then SetValue( Capacidad_Tren_Actual:Factor, 0.85 );
+    } );
 
        /*************************************
         ****  FUNCTION: calcular_velocidad_maxima
         *************************************/
 MakeFunction( calcular_velocidad_maxima, [],
-SetValue(Recorrido_Actual:Velocidad_Maxima_Permitida, Recorrido_Actual:Velocidad_Maxima_Reglamentaria * Condicion_Climatica_Actual:Factor * Capacidad_Tren_Actual:Factor) );
+    SetValue( Recorrido_Actual:Velocidad_Maxima_Permitida, 
+        Recorrido_Actual:Velocidad_Maxima_Reglamentaria * Condicion_Climatica_Actual:Factor
+            * Capacidad_Tren_Actual:Factor ) );
 
        /*************************************
         ****  FUNCTION: transitando_curva
         *************************************/
 MakeFunction( transitando_curva, [],
-If Tren_Actual:Posicion < Recorrido_Actual:Proxima_Curva:Posicion_Fin 
-    And Tren_Actual:Posicion > Recorrido_Actual:Proxima_Curva:Posicion_Inicio
-Then
-    SetValue(Tren_Actual:Transitando_Curva, true)
-Else
-    SetValue(Tren_Actual:Transitando_Curva, false) );
+    If ( Tren_Actual:Posicion < Recorrido_Actual:Proxima_Curva:Posicion_Fin
+             And Tren_Actual:Posicion > Recorrido_Actual:Proxima_Curva:Posicion_Inicio )
+      Then SetValue( Tren_Actual:Transitando_Curva, true )
+      Else SetValue( Tren_Actual:Transitando_Curva, false ) );
 
        /*************************************
         ****  FUNCTION: distancia_min_frenado_estacion
         *************************************/
 MakeFunction( distancia_min_frenado_estacion, [],
-SetValue(Proxima_Estacion:Distancia_Minima_Frenado, 
-    Tren_Actual:Velocidad_Actual * 10 / (Condicion_Climatica_Actual:Factor * Capacidad_Tren_Actual:Factor)) );
+    SetValue( Proxima_Estacion:Distancia_Minima_Frenado, 
+        Tren_Actual:Velocidad_Actual * 10 / ( Condicion_Climatica_Actual:Factor
+                                                  * Capacidad_Tren_Actual:Factor ) ) );
 
        /*************************************
         ****  FUNCTION: distancia_min_frenado_curva
         *************************************/
 MakeFunction( distancia_min_frenado_curva, [],
-SetValue(Proxima_Curva:Distancia_Minima_Frenado, 
-    (Tren_Actual:Velocidad_Actual - Proxima_Curva:Velocidad) * 10 / (Condicion_Climatica_Actual:Factor * Capacidad_Tren_Actual:Factor)) );
+    SetValue( Proxima_Curva:Distancia_Minima_Frenado, 
+        ( Tren_Actual:Velocidad_Actual - Proxima_Curva:Velocidad )
+            * 10 / ( Condicion_Climatica_Actual:Factor * Capacidad_Tren_Actual:Factor ) ) );
 
        /*************************************
         ****  FUNCTION: calcular_accion_sugerida
         *************************************/
 MakeFunction( calcular_accion_sugerida, [],
 {
-inicializar();
-ForwardChain([NOASSERT],NULL,Global:Reglas);
-SetValue(Text22:Title, Tren_Actual:Accion_Sugerida);
-PostMessage(Tren_Actual:Accion_Sugerida);
-UpdateImage(Text22);
+inicializar(  );
+ForwardChain( [ NOASSERT ], NULL, Global:Reglas );
+SetValue( Text22:Title, Tren_Actual:Accion_Sugerida );
+Text22:Visible = TRUE;
+TxtAS:Visible = TRUE;
+ResetImage (  Text22  );
+ResetImage (  TxtAS  );
 } );
 
        /*************************************
         ****  FUNCTION: inicializar
         *************************************/
 MakeFunction( inicializar, [],
-{
-factor_capacidad();
-factor_condicion_climatica();
-calcular_distancia_formacion();
-calcular_distancia_estacion();
-calcular_distancia_curva();
-calcular_velocidad_curva();
-calcular_velocidad_maxima();
-transitando_curva();
-distancia_min_frenado_estacion();
-distancia_min_frenado_curva();
-} );
+    {
+    factor_capacidad(  );
+    factor_condicion_climatica(  );
+    calcular_distancia_formacion(  );
+    calcular_distancia_estacion(  );
+    calcular_distancia_curva(  );
+    calcular_velocidad_curva(  );
+    calcular_velocidad_maxima(  );
+    transitando_curva(  );
+    distancia_min_frenado_estacion(  );
+    distancia_min_frenado_curva(  );
+    } );
 
        /*************************************
         ****  FUNCTION: Salir
         *************************************/
 MakeFunction( Salir, [],
-HideWindow(SESSION) );
+{
+LimpiarCampos();
+HideWindow( SESSION );
+} );
 
        /*************************************
         ****  FUNCTION: LimpiarCampos
         *************************************/
 MakeFunction( LimpiarCampos, [],
 {
-SetValue(Recorrido_Actual:Nombre, NULL);
-SetValue(Recorrido_Actual:Velocidad_Minima_Reglamentaria, NULL);
-SetValue(Recorrido_Actual:Velocidad_Maxima_Reglamentaria, NULL);
-SetValue(Recorrido_Actual:Posicion_Siguiente_Tren, NULL);
-SetValue(Proxima_Estacion:Nombre, NULL);
-SetValue(Proxima_Estacion:Posicion, NULL);
-SetValue(Proximo_Semaforo:Color, NULL);
-SetValue(Proxima_Curva:Posicion_Inicio, NULL);
-SetValue(Proxima_Curva:Posicion_Fin, NULL);
-SetValue(Proxima_Curva:Radio, NULL);
-SetValue(Condicion_Climatica_Actual:Descripcion, NULL);
-SetValue(Tren_Actual:Velocidad_Actual, NULL);
-SetValue(Tren_Actual:Posicion, NULL);
-SetValue(Capacidad_Tren_Actual:Valor, NULL);
-SetValue(Tren_Actual:Estado_Puertas, NULL);
+SetValue( Recorrido_Actual:Nombre, NULL );
+SetValue( Recorrido_Actual:Velocidad_Minima_Reglamentaria,
+    NULL );
+SetValue( Recorrido_Actual:Velocidad_Maxima_Reglamentaria,
+    NULL );
+SetValue( Recorrido_Actual:Posicion_Siguiente_Tren, NULL );
+SetValue( Proxima_Estacion:Nombre, NULL );
+SetValue( Proxima_Estacion:Posicion, NULL );
+SetValue( Proximo_Semaforo:Color, NULL );
+SetValue( Proxima_Curva:Posicion_Inicio, NULL );
+SetValue( Proxima_Curva:Posicion_Fin, NULL );
+SetValue( Proxima_Curva:Radio, NULL );
+SetValue( Condicion_Climatica_Actual:Descripcion, NULL );
+SetValue( Tren_Actual:Velocidad_Actual, NULL );
+SetValue( Tren_Actual:Posicion, NULL );
+SetValue( Capacidad_Tren_Actual:Valor, NULL );
+SetValue( Tren_Actual:Estado_Puertas, NULL );
+SetValue( Text22:Title, NULL );
+Text22:Visible = FALSE;
+TxtAS:Visible = FALSE;
+ResetImage (  Text22  );
+ResetImage (  TxtAS  );
 } );
 
 
@@ -409,7 +414,7 @@ SetSlotOption( Capacidad:Factor, MAXIMUM_VALUE, 1 );
 /*********************************************************/
 MakeSlot( Global:Reglas );
 SetSlotOption( Global:Reglas, MULTIPLE );
-SetValue( Global:Reglas, R1.DisminuirAVMP, R2.DetenerFormacion, R3.MantenerVelocidadActual, R4.DisminuirAVelDeCurva, R5.DetenerseEnEstacion, R6.DisminurVelPorFormacion, R7.DetenerFormacionPorFormacion, R8.DisminuirVelSemaforoAmarillo, R9.MantenerVelSemaforoAmarillo, R10.AumentarVelocidadAVMP, R11.AumentarVelSalidaEstacion, R12.AumVeldSalidaEstacionAma, R13.AumentarVelocidadAVMinP, R14.AumentarVelAVelCurva, R15.AumentarVelAVelCurva );
+SetValue( Global:Reglas, R1.DisminuirAVMP, R2.DetenerFormacion, R3.MantenerVelocidadActual, R4.DisminuirAVelDeCurva, R5.DetenerseEnEstacion, R6.DisminurVelPorFormacion, R7.DetenerFormacionPorFormacion, R8.DisminuirVelSemaforoAmarillo, R9.MantenerVelSemaforoAmarillo, R10.AumentarVelocidadAVMP, R11.AumentarVelSalidaEstacion, R12.AumVeldSalidaEstacionAma, R13.AumentarVelocidadAVMinP, R14.AumentarVelAVelCurva, R15.MantenerVelCurva );
 
        /*************************************
         ****  INSTANCE: SESSION
@@ -419,8 +424,8 @@ SESSION:Y = 107;
 SESSION:Title = Velocidad;
 SESSION:Width = 754;
 SESSION:Height = 585;
-SESSION:Visible = TRUE;
-SESSION:State = NORM;
+SESSION:Visible = FALSE;
+SESSION:State = HIDDEN;
 SetValue( SESSION:BackgroundColor, 223, 223, 223 );
 SESSION:Menu = TRUE;
 SESSION:Titlebar = TRUE;
@@ -440,7 +445,7 @@ SetSlotOption( Proximo_Semaforo:Color, IMAGE, ColorSem );
 MakeInstance( Proxima_Estacion, Estacion );
 Proxima_Estacion:Posicion = NULL;
 SetSlotOption( Proxima_Estacion:Posicion, IMAGE, PosProxEst );
-Proxima_Estacion:Distancia_Minima_Frenado = 261435.294117647;
+Proxima_Estacion:Distancia_Minima_Frenado = 1742.85714285714;
 Proxima_Estacion:Nombre = NULL;
 SetSlotOption( Proxima_Estacion:Nombre, IMAGE, Edit2_3 );
 
@@ -454,8 +459,8 @@ Proxima_Curva:Posicion_Fin = NULL;
 SetSlotOption( Proxima_Curva:Posicion_Fin, IMAGE, PosFinCurva );
 Proxima_Curva:Radio = NULL;
 SetSlotOption( Proxima_Curva:Radio, IMAGE, RadioCurva );
-Proxima_Curva:Velocidad = 124666.666660433;
-Proxima_Curva:Distancia_Minima_Frenado = -1205231.37247569;
+Proxima_Curva:Velocidad = 17701.502718888;
+Proxima_Curva:Distancia_Minima_Frenado = -251135.753126972;
 
        /*************************************
         ****  INSTANCE: Condicion_Climatica_Actual
@@ -463,7 +468,7 @@ Proxima_Curva:Distancia_Minima_Frenado = -1205231.37247569;
 MakeInstance( Condicion_Climatica_Actual, Condicion_Climatica );
 Condicion_Climatica_Actual:Descripcion = NULL;
 SetSlotOption( Condicion_Climatica_Actual:Descripcion, IMAGE, Clima );
-Condicion_Climatica_Actual:Factor = 0.85;
+Condicion_Climatica_Actual:Factor = 0.7;
 
        /*************************************
         ****  INSTANCE: Tren_Actual
@@ -477,11 +482,11 @@ Tren_Actual:Posicion = NULL;
 SetSlotOption( Tren_Actual:Posicion, IMAGE, TrenPos );
 Tren_Actual:Estado_Puertas = NULL;
 SetSlotOption( Tren_Actual:Estado_Puertas, IMAGE, TrenPuertas );
-Tren_Actual:Distancia_A_Proxima_Formacion = -1000000;
-Tren_Actual:Distancia_A_Proxima_Estacion = 111110000000;
-Tren_Actual:Distancia_A_Proxima_Curva = 1111111;
+Tren_Actual:Distancia_A_Proxima_Formacion = 1230;
+Tren_Actual:Distancia_A_Proxima_Estacion = 12312312320;
+Tren_Actual:Distancia_A_Proxima_Curva = 123122;
 Tren_Actual:Transitando_Curva = false;
-Tren_Actual:Accion_Sugerida = "Detención inmediata de la formación";
+Tren_Actual:Accion_Sugerida = "Aumente velocidad a 123";
 
        /*************************************
         ****  INSTANCE: Recorrido_Actual
@@ -491,8 +496,6 @@ Recorrido_Actual:Proxima_Curva = Proxima_Curva;
 Recorrido_Actual:Estacion = Proxima_Estacion;
 Recorrido_Actual:Semaforo = Proximo_Semaforo;
 Recorrido_Actual:Condicion_Climantica = Condicion_Climatica_Actual;
-Recorrido_Actual:Velocidad_Maxima_Permitida = 9444444.35;
-SetSlotOption( Recorrido_Actual:Velocidad_Maxima_Permitida, IMAGE, VelMaxReg );
 Recorrido_Actual:Posicion_Siguiente_Tren = NULL;
 SetSlotOption( Recorrido_Actual:Posicion_Siguiente_Tren, IMAGE, PosProxTren );
 Recorrido_Actual:Velocidad_Maxima_Reglamentaria = NULL;
@@ -501,6 +504,7 @@ Recorrido_Actual:Velocidad_Minima_Reglamentaria = NULL;
 SetSlotOption( Recorrido_Actual:Velocidad_Minima_Reglamentaria, IMAGE, VelMinReg );
 Recorrido_Actual:Nombre = NULL;
 SetSlotOption( Recorrido_Actual:Nombre, IMAGE, NombreRecorrido );
+Recorrido_Actual:Velocidad_Maxima_Permitida = 7.7;
 
        /*************************************
         ****  INSTANCE: Capacidad_Tren_Actual
@@ -1128,7 +1132,7 @@ MakeInstance( Text4, Text );
 Text4:SessionNumber = 0;
 Text4:Title = "Posicion Siguiente Tren";
 Text4:Visible = TRUE;
-Text4:X = 104;
+Text4:X = 102;
 Text4:Y = 145;
 SetValue( Text4:ForegroundColor, 0, 0, 0 );
 SetValue( Text4:BackgroundColor, 255, 255, 255 );
@@ -1523,18 +1527,18 @@ Text21:Justification = CENTER;
         *************************************/
 MakeInstance( Text22, Text );
 Text22:SessionNumber = 0;
-Text22:Title = "Detención inmediata de la formación";
-Text22:Visible = TRUE;
-Text22:X = 412;
-Text22:Y = 374;
-SetValue( Text22:ForegroundColor, 0, 0, 0 );
+Text22:Title = NULL;
+Text22:Visible = FALSE;
+Text22:X = 447;
+Text22:Y = 385;
+SetValue( Text22:ForegroundColor, 0, 0, 128 );
 SetValue( Text22:BackgroundColor, 255, 255, 255 );
 SetValue( Text22:ForegroundColor2, 0, 0, 0 );
 SetValue( Text22:BackgroundColor2, 255, 255, 255 );
-Text22:Width = 242;
-Text22:Height = 118;
+Text22:Width = 166;
+Text22:Height = 100;
 Text22:Font = "MS Sans Serif";
-Text22:TextSize = 24;
+Text22:TextSize = 20;
 Text22:Bold = TRUE;
 Text22:Underline = FALSE;
 Text22:Italic = FALSE;
@@ -1542,6 +1546,31 @@ Text22:StrikeOut = FALSE;
 Text22:Justification = CENTER;
 Text22:Transparent = TRUE;
  ResetImage (  Text22  ); 
+
+       /*************************************
+        ****  INSTANCE: TxtAS
+        *************************************/
+MakeInstance( TxtAS, Text );
+TxtAS:SessionNumber = 0;
+TxtAS:Title = "Accion Sugerida";
+TxtAS:Visible = FALSE;
+TxtAS:X = 436;
+TxtAS:Y = 348;
+SetValue( TxtAS:ForegroundColor, 0, 0, 0 );
+SetValue( TxtAS:BackgroundColor, 255, 255, 255 );
+SetValue( TxtAS:ForegroundColor2, 0, 0, 0 );
+SetValue( TxtAS:BackgroundColor2, 255, 255, 255 );
+TxtAS:Width = 189;
+TxtAS:Height = 36;
+TxtAS:Justification = CENTER;
+TxtAS:Transparent = TRUE;
+TxtAS:Font = "MS Sans Serif";
+TxtAS:TextSize = 18;
+TxtAS:Bold = TRUE;
+TxtAS:Underline = FALSE;
+TxtAS:Italic = FALSE;
+TxtAS:StrikeOut = FALSE;
+ ResetImage (  TxtAS  ); 
 
        /*************************************
         ****  INSTANCE: Transcript1
@@ -2108,7 +2137,7 @@ MakeRule( R1.DisminuirAVMP, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
         *************************************/
 MakeRule( R2.DetenerFormacion, [Proximo_Semaforo|Semaforo],
     Proximo_Semaforo:Color #= Rojo,
-    SetValue( Tren_Actual:Accion_Sugerida, "Detención inmediata de la formación" ) );
+    SetValue( Tren_Actual:Accion_Sugerida, "Detencion inmediata de la formacion" ) );
 
        /*************************************
         ****  RULE: R3.MantenerVelocidadActual
@@ -2157,7 +2186,7 @@ MakeRule( R6.DisminurVelPorFormacion, [Tren_Actual|Tren],
         *************************************/
 MakeRule( R7.DetenerFormacionPorFormacion, [Tren_Actual|Tren],
     Tren_Actual:Distancia_A_Proxima_Formacion < 500,
-    SetValue( Tren_Actual:Accion_Sugerida, "Detención inmediata de la formación" ) );
+    SetValue( Tren_Actual:Accion_Sugerida, "Detencion inmediata de la formacion" ) );
 
        /*************************************
         ****  RULE: R8.DisminuirVelSemaforoAmarillo
@@ -2230,7 +2259,7 @@ MakeRule( R13.AumentarVelocidadAVMinP, [Tren_Actual|Tren Recorrido_Actual|Recorr
         #= false;
     },
     SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a "
-                                               # Recorrido_Actual:Velocidad_Minima_Permitda ) );
+                                               # Recorrido_Actual:Velocidad_Minima_Reglamentaria ) );
 
        /*************************************
         ****  RULE: R14.AumentarVelAVelCurva
@@ -2245,9 +2274,9 @@ MakeRule( R14.AumentarVelAVelCurva, [Tren_Actual|Tren Proximo_Semaforo|Semaforo 
                                                # Recorrido_Actual:Proxima_Curva:Velocidad ) );
 
        /*************************************
-        ****  RULE: R15.AumentarVelAVelCurva
+        ****  RULE: R15.MantenerVelCurva
         *************************************/
-MakeRule( R15.AumentarVelAVelCurva, [Tren_Actual|Tren Proximo_Semaforo|Semaforo Proxima_Curva|Curva],
+MakeRule( R15.MantenerVelCurva, [Tren_Actual|Tren Proximo_Semaforo|Semaforo Proxima_Curva|Curva],
     {
     Tren_Actual:Velocidad_Actual #= Proxima_Curva:Velocidad And
         Proximo_Semaforo:Color #= Verde And Tren_Actual:Transitando_Curva
