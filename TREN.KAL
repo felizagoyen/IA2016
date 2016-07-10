@@ -1,6 +1,3 @@
-
-
-
 /*********************************************************/
 /**         ALL FUNCTIONS ARE SAVED BELOW             **/
 /*********************************************************/
@@ -30,9 +27,9 @@ MakeFunction( calcular_distancia_curva, [],
         ****  FUNCTION: calcular_velocidad_curva
         *************************************/
 MakeFunction( calcular_velocidad_curva, [],
-    SetValue( Proxima_Curva:Velocidad, 2.2 * Sqrt( Proxima_Curva:Radio )
+    SetValue( Proxima_Curva:Velocidad, Ceil( 2.2 * Sqrt( Proxima_Curva:Radio )
                                            * Condicion_Climatica_Actual:Factor
-                                           * Capacidad_Tren_Actual:Factor ) );
+                                           * Capacidad_Tren_Actual:Factor ) ) );
 
        /*************************************
         ****  FUNCTION: factor_condicion_climatica
@@ -71,8 +68,8 @@ MakeFunction( factor_capacidad, [],
         *************************************/
 MakeFunction( calcular_velocidad_maxima, [],
     SetValue( Recorrido_Actual:Velocidad_Maxima_Permitida, 
-        Recorrido_Actual:Velocidad_Maxima_Reglamentaria * Condicion_Climatica_Actual:Factor
-            * Capacidad_Tren_Actual:Factor ) );
+        Ceil( Recorrido_Actual:Velocidad_Maxima_Reglamentaria * Condicion_Climatica_Actual:Factor
+            * Capacidad_Tren_Actual:Factor ) ) );
 
        /*************************************
         ****  FUNCTION: transitando_curva
@@ -436,39 +433,39 @@ SESSION:Sizebox = TRUE;
         ****  INSTANCE: Proximo_Semaforo
         *************************************/
 MakeInstance( Proximo_Semaforo, Semaforo );
-Proximo_Semaforo:Color = NULL;
+Proximo_Semaforo:Color = Verde;
 SetSlotOption( Proximo_Semaforo:Color, IMAGE, ColorSem );
 
        /*************************************
         ****  INSTANCE: Proxima_Estacion
         *************************************/
 MakeInstance( Proxima_Estacion, Estacion );
-Proxima_Estacion:Posicion = NULL;
+Proxima_Estacion:Posicion = 12322;
 SetSlotOption( Proxima_Estacion:Posicion, IMAGE, PosProxEst );
-Proxima_Estacion:Distancia_Minima_Frenado = 1742.85714285714;
-Proxima_Estacion:Nombre = NULL;
+Proxima_Estacion:Distancia_Minima_Frenado = 1245.67474048443;
+Proxima_Estacion:Nombre = 1223;
 SetSlotOption( Proxima_Estacion:Nombre, IMAGE, Edit2_3 );
 
        /*************************************
         ****  INSTANCE: Proxima_Curva
         *************************************/
 MakeInstance( Proxima_Curva, Curva );
-Proxima_Curva:Posicion_Inicio = NULL;
+Proxima_Curva:Posicion_Inicio = 1222222222;
 SetSlotOption( Proxima_Curva:Posicion_Inicio, IMAGE, PosIniCurva );
-Proxima_Curva:Posicion_Fin = NULL;
+Proxima_Curva:Posicion_Fin = 22222222222;
 SetSlotOption( Proxima_Curva:Posicion_Fin, IMAGE, PosFinCurva );
-Proxima_Curva:Radio = NULL;
+Proxima_Curva:Radio = 22;
 SetSlotOption( Proxima_Curva:Radio, IMAGE, RadioCurva );
-Proxima_Curva:Velocidad = 17701.502718888;
-Proxima_Curva:Distancia_Minima_Frenado = -251135.753126972;
+Proxima_Curva:Velocidad = 8;
+Proxima_Curva:Distancia_Minima_Frenado = 1134.94809688581;
 
        /*************************************
         ****  INSTANCE: Condicion_Climatica_Actual
         *************************************/
 MakeInstance( Condicion_Climatica_Actual, Condicion_Climatica );
-Condicion_Climatica_Actual:Descripcion = NULL;
+Condicion_Climatica_Actual:Descripcion = Lluvia;
 SetSlotOption( Condicion_Climatica_Actual:Descripcion, IMAGE, Clima );
-Condicion_Climatica_Actual:Factor = 0.7;
+Condicion_Climatica_Actual:Factor = 0.85;
 
        /*************************************
         ****  INSTANCE: Tren_Actual
@@ -476,17 +473,17 @@ Condicion_Climatica_Actual:Factor = 0.7;
 MakeInstance( Tren_Actual, Tren );
 Tren_Actual:Recorrido = Recorrido_Actual;
 Tren_Actual:Capacidad = Capacidad_Tren_Actual;
-Tren_Actual:Velocidad_Actual = NULL;
+Tren_Actual:Velocidad_Actual = 90;
 SetSlotOption( Tren_Actual:Velocidad_Actual, IMAGE, TrenVel );
-Tren_Actual:Posicion = NULL;
+Tren_Actual:Posicion = 12;
 SetSlotOption( Tren_Actual:Posicion, IMAGE, TrenPos );
-Tren_Actual:Estado_Puertas = NULL;
+Tren_Actual:Estado_Puertas = Cerradas;
 SetSlotOption( Tren_Actual:Estado_Puertas, IMAGE, TrenPuertas );
-Tren_Actual:Distancia_A_Proxima_Formacion = 1230;
-Tren_Actual:Distancia_A_Proxima_Estacion = 12312312320;
-Tren_Actual:Distancia_A_Proxima_Curva = 123122;
+Tren_Actual:Distancia_A_Proxima_Formacion = 123210;
+Tren_Actual:Distancia_A_Proxima_Estacion = 12310;
+Tren_Actual:Distancia_A_Proxima_Curva = 1222222210;
 Tren_Actual:Transitando_Curva = false;
-Tren_Actual:Accion_Sugerida = "Aumente velocidad a 123";
+Tren_Actual:Accion_Sugerida = "Disminuya velocidad a 89 km/h";
 
        /*************************************
         ****  INSTANCE: Recorrido_Actual
@@ -496,23 +493,23 @@ Recorrido_Actual:Proxima_Curva = Proxima_Curva;
 Recorrido_Actual:Estacion = Proxima_Estacion;
 Recorrido_Actual:Semaforo = Proximo_Semaforo;
 Recorrido_Actual:Condicion_Climantica = Condicion_Climatica_Actual;
-Recorrido_Actual:Posicion_Siguiente_Tren = NULL;
+Recorrido_Actual:Posicion_Siguiente_Tren = 123222;
 SetSlotOption( Recorrido_Actual:Posicion_Siguiente_Tren, IMAGE, PosProxTren );
-Recorrido_Actual:Velocidad_Maxima_Reglamentaria = NULL;
+Recorrido_Actual:Velocidad_Maxima_Reglamentaria = 122;
 SetSlotOption( Recorrido_Actual:Velocidad_Maxima_Reglamentaria, IMAGE, VelMaxReg );
-Recorrido_Actual:Velocidad_Minima_Reglamentaria = NULL;
+Recorrido_Actual:Velocidad_Minima_Reglamentaria = 11;
 SetSlotOption( Recorrido_Actual:Velocidad_Minima_Reglamentaria, IMAGE, VelMinReg );
-Recorrido_Actual:Nombre = NULL;
+Recorrido_Actual:Nombre = 123;
 SetSlotOption( Recorrido_Actual:Nombre, IMAGE, NombreRecorrido );
-Recorrido_Actual:Velocidad_Maxima_Permitida = 7.7;
+Recorrido_Actual:Velocidad_Maxima_Permitida = 89;
 
        /*************************************
         ****  INSTANCE: Capacidad_Tren_Actual
         *************************************/
 MakeInstance( Capacidad_Tren_Actual, Capacidad );
-Capacidad_Tren_Actual:Valor = NULL;
+Capacidad_Tren_Actual:Valor = 23;
 SetSlotOption( Capacidad_Tren_Actual:Valor, IMAGE, TrenCap );
-Capacidad_Tren_Actual:Factor = 1;
+Capacidad_Tren_Actual:Factor = 0.85;
 
        /*************************************
         ****  INSTANCE: Meter1
@@ -549,7 +546,7 @@ ColorSem:Height = 27;
 ColorSem:Transparent = TRUE;
 SetValue( ColorSem:AllowableValues, Verde, Amarillo, Rojo );
 ColorSem:TabStop = 0;
-ColorSem:Value = NULL;
+ColorSem:Value = Verde;
 ColorSem:Owner = Proximo_Semaforo;
 ColorSem:OwnerSlot = Color;
  ResetImage (  ColorSem  ); 
@@ -572,7 +569,7 @@ Clima:Height = 27;
 Clima:Transparent = TRUE;
 SetValue( Clima:AllowableValues, Despejado, Lluvia, Nieve, Niebla );
 Clima:TabStop = 0;
-Clima:Value = NULL;
+Clima:Value = Lluvia;
 Clima:Owner = Condicion_Climatica_Actual;
 Clima:OwnerSlot = Descripcion;
  ResetImage (  Clima  ); 
@@ -595,7 +592,7 @@ TrenPuertas:Height = 27;
 TrenPuertas:Transparent = TRUE;
 SetValue( TrenPuertas:AllowableValues, Abiertas, Cerradas );
 TrenPuertas:TabStop = 0;
-TrenPuertas:Value = NULL;
+TrenPuertas:Value = Cerradas;
 TrenPuertas:Owner = Tren_Actual;
 TrenPuertas:OwnerSlot = Estado_Puertas;
  ResetImage (  TrenPuertas  ); 
@@ -618,7 +615,7 @@ NombreRecorrido:Height = 23;
 NombreRecorrido:Multiline = FALSE;
 NombreRecorrido:Password = FALSE;
 NombreRecorrido:TabStop = 1;
-NombreRecorrido:Value = NULL;
+NombreRecorrido:Value = 123;
 NombreRecorrido:Owner = Recorrido_Actual;
 NombreRecorrido:OwnerSlot = Nombre;
  ResetImage (  NombreRecorrido  ); 
@@ -697,7 +694,7 @@ VelMinReg:Password = FALSE;
 VelMinReg:TabStop = 2;
 VelMinReg:Owner = Recorrido_Actual;
 VelMinReg:OwnerSlot = Velocidad_Minima_Reglamentaria;
-VelMinReg:Value = NULL;
+VelMinReg:Value = 11;
  ResetImage (  VelMinReg  ); 
 
        /*************************************
@@ -720,7 +717,7 @@ VelMaxReg:Password = FALSE;
 VelMaxReg:TabStop = 3;
 VelMaxReg:Owner = Recorrido_Actual;
 VelMaxReg:OwnerSlot = Velocidad_Maxima_Reglamentaria;
-VelMaxReg:Value = NULL;
+VelMaxReg:Value = 122;
  ResetImage (  VelMaxReg  ); 
 
        /*************************************
@@ -741,7 +738,7 @@ PosProxTren:Height = 23;
 PosProxTren:Multiline = FALSE;
 PosProxTren:Password = FALSE;
 PosProxTren:TabStop = 4;
-PosProxTren:Value = NULL;
+PosProxTren:Value = 123222;
 PosProxTren:Owner = Recorrido_Actual;
 PosProxTren:OwnerSlot = Posicion_Siguiente_Tren;
  ResetImage (  PosProxTren  ); 
@@ -764,7 +761,7 @@ Edit2_3:Height = 23;
 Edit2_3:Multiline = FALSE;
 Edit2_3:Password = FALSE;
 Edit2_3:TabStop = 1;
-Edit2_3:Value = NULL;
+Edit2_3:Value = 1223;
 Edit2_3:Owner = Proxima_Estacion;
 Edit2_3:OwnerSlot = Nombre;
  ResetImage (  Edit2_3  ); 
@@ -787,7 +784,7 @@ PosProxEst:Height = 23;
 PosProxEst:Multiline = FALSE;
 PosProxEst:Password = FALSE;
 PosProxEst:TabStop = 1;
-PosProxEst:Value = NULL;
+PosProxEst:Value = 12322;
 PosProxEst:Owner = Proxima_Estacion;
 PosProxEst:OwnerSlot = Posicion;
  ResetImage (  PosProxEst  ); 
@@ -810,7 +807,7 @@ PosIniCurva:Height = 23;
 PosIniCurva:Multiline = FALSE;
 PosIniCurva:Password = FALSE;
 PosIniCurva:TabStop = 1;
-PosIniCurva:Value = NULL;
+PosIniCurva:Value = 1222222222;
 PosIniCurva:Owner = Proxima_Curva;
 PosIniCurva:OwnerSlot = Posicion_Inicio;
  ResetImage (  PosIniCurva  ); 
@@ -833,7 +830,7 @@ PosFinCurva:Height = 23;
 PosFinCurva:Multiline = FALSE;
 PosFinCurva:Password = FALSE;
 PosFinCurva:TabStop = 1;
-PosFinCurva:Value = NULL;
+PosFinCurva:Value = 22222222222;
 PosFinCurva:Owner = Proxima_Curva;
 PosFinCurva:OwnerSlot = Posicion_Fin;
  ResetImage (  PosFinCurva  ); 
@@ -856,7 +853,7 @@ RadioCurva:Height = 23;
 RadioCurva:Multiline = FALSE;
 RadioCurva:Password = FALSE;
 RadioCurva:TabStop = 1;
-RadioCurva:Value = NULL;
+RadioCurva:Value = 22;
 RadioCurva:Owner = Proxima_Curva;
 RadioCurva:OwnerSlot = Radio;
  ResetImage (  RadioCurva  ); 
@@ -879,7 +876,7 @@ TrenVel:Height = 23;
 TrenVel:Multiline = FALSE;
 TrenVel:Password = FALSE;
 TrenVel:TabStop = 1;
-TrenVel:Value = NULL;
+TrenVel:Value = 90;
 TrenVel:Owner = Tren_Actual;
 TrenVel:OwnerSlot = Velocidad_Actual;
  ResetImage (  TrenVel  ); 
@@ -902,7 +899,7 @@ TrenPos:Height = 23;
 TrenPos:Multiline = FALSE;
 TrenPos:Password = FALSE;
 TrenPos:TabStop = 1;
-TrenPos:Value = NULL;
+TrenPos:Value = 12;
 TrenPos:Owner = Tren_Actual;
 TrenPos:OwnerSlot = Posicion;
  ResetImage (  TrenPos  ); 
@@ -925,7 +922,7 @@ TrenCap:Height = 23;
 TrenCap:Multiline = FALSE;
 TrenCap:Password = FALSE;
 TrenCap:TabStop = 1;
-TrenCap:Value = NULL;
+TrenCap:Value = 23;
 TrenCap:Owner = Capacidad_Tren_Actual;
 TrenCap:OwnerSlot = Valor;
  ResetImage (  TrenCap  ); 
@@ -1527,8 +1524,8 @@ Text21:Justification = CENTER;
         *************************************/
 MakeInstance( Text22, Text );
 Text22:SessionNumber = 0;
-Text22:Title = NULL;
-Text22:Visible = FALSE;
+Text22:Title = "Disminuya velocidad a 89 km/h";
+Text22:Visible = TRUE;
 Text22:X = 447;
 Text22:Y = 385;
 SetValue( Text22:ForegroundColor, 0, 0, 128 );
@@ -1553,7 +1550,7 @@ Text22:Transparent = TRUE;
 MakeInstance( TxtAS, Text );
 TxtAS:SessionNumber = 0;
 TxtAS:Title = "Accion Sugerida";
-TxtAS:Visible = FALSE;
+TxtAS:Visible = TRUE;
 TxtAS:X = 436;
 TxtAS:Y = 348;
 SetValue( TxtAS:ForegroundColor, 0, 0, 0 );
@@ -2130,7 +2127,8 @@ Drawing20:Height = 1;
 MakeRule( R1.DisminuirAVMP, [Tren_Actual|Tren Recorrido_Actual|Recorrido],
     Tren_Actual:Velocidad_Actual > Recorrido_Actual:Velocidad_Maxima_Permitida,
     SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a "
-                                               # Recorrido_Actual:Velocidad_Maxima_Permitida ) );
+                                               # Recorrido_Actual:Velocidad_Maxima_Permitida
+                                               # " km/h" ) );
 
        /*************************************
         ****  RULE: R2.DetenerFormacion
@@ -2159,7 +2157,8 @@ MakeRule( R4.DisminuirAVelDeCurva, [Tren_Actual|Tren Proxima_Curva|Curva],
         Tren_Actual:Distancia_A_Proxima_Curva <= Proxima_Curva:Distancia_Minima_Frenado;
     },
     SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a "
-                                               # Proxima_Curva:Velocidad ) );
+                                               # Proxima_Curva:Velocidad
+                                               # " km/h" ) );
 
        /*************************************
         ****  RULE: R5.DetenerseEnEstacion
@@ -2169,7 +2168,7 @@ MakeRule( R5.DetenerseEnEstacion, [Tren_Actual|Tren Proxima_Estacion|Estacion],
     Tren_Actual:Velocidad_Actual > 0 And Tren_Actual:Distancia_A_Proxima_Estacion
         <= Proxima_Estacion:Distancia_Minima_Frenado;
     },
-    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 0" ) );
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 0 km/h" ) );
 
        /*************************************
         ****  RULE: R6.DisminurVelPorFormacion
@@ -2179,7 +2178,7 @@ MakeRule( R6.DisminurVelPorFormacion, [Tren_Actual|Tren],
     Tren_Actual:Velocidad_Actual > 12 And Tren_Actual:Distancia_A_Proxima_Formacion
         < 1000;
     },
-    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 12" ) );
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 12 km/h" ) );
 
        /*************************************
         ****  RULE: R7.DetenerFormacionPorFormacion
@@ -2196,7 +2195,7 @@ MakeRule( R8.DisminuirVelSemaforoAmarillo, [Tren_Actual|Tren Proximo_Semaforo|Se
     Tren_Actual:Velocidad_Actual > 12 And Proximo_Semaforo:Color
         #= Amarillo;
     },
-    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 12" ) );
+    SetValue( Tren_Actual:Accion_Sugerida, "Disminuya velocidad a 12 km/h" ) );
 
        /*************************************
         ****  RULE: R9.MantenerVelSemaforoAmarillo
@@ -2220,7 +2219,8 @@ MakeRule( R10.AumentarVelocidadAVMP, [Tren_Actual|Tren Recorrido_Actual|Recorrid
         #= false;
     },
     SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a "
-                                               # Recorrido_Actual:Velocidad_Maxima_Permitida ) );
+                                               # Recorrido_Actual:Velocidad_Maxima_Permitida
+                                               # " km/h" ) );
 
        /*************************************
         ****  RULE: R11.AumentarVelSalidaEstacion
@@ -2232,7 +2232,8 @@ MakeRule( R11.AumentarVelSalidaEstacion, [Tren_Actual|Tren Proximo_Semaforo|Sema
         #= 0 And Tren_Actual:Transitando_Curva #= false;
     },
     SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a "
-                                               # Recorrido_Actual:Maxima_Velocidad_Permitida ) );
+                                               # Recorrido_Actual:Maxima_Velocidad_Permitida
+                                               # " km/h" ) );
 
        /*************************************
         ****  RULE: R12.AumVeldSalidaEstacionAma
@@ -2244,7 +2245,7 @@ MakeRule( R12.AumVeldSalidaEstacionAma, [Tren_Actual|Tren Proximo_Semaforo|Semaf
         Tren_Actual:Distancia_A_Proxima_Estacion #= 0 And Tren_Actual:Transitando_Curva
         #= false;
     },
-    SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a 12" ) );
+    SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a 12 km/h" ) );
 
        /*************************************
         ****  RULE: R13.AumentarVelocidadAVMinP
@@ -2259,7 +2260,8 @@ MakeRule( R13.AumentarVelocidadAVMinP, [Tren_Actual|Tren Recorrido_Actual|Recorr
         #= false;
     },
     SetValue( Tren_Actual:Accion_Sugerida, "Aumente velocidad a "
-                                               # Recorrido_Actual:Velocidad_Minima_Reglamentaria ) );
+                                               # Recorrido_Actual:Velocidad_Minima_Reglamentaria
+                                               # " km/h" ) );
 
        /*************************************
         ****  RULE: R14.AumentarVelAVelCurva
