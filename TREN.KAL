@@ -1,3 +1,6 @@
+
+
+
 /*********************************************************/
 /**         ALL FUNCTIONS ARE SAVED BELOW             **/
 /*********************************************************/
@@ -418,7 +421,7 @@ SetValue( Global:Reglas, R1.DisminuirAVMP, R2.DetenerFormacion, R3.MantenerVeloc
         *************************************/
 SESSION:X = 36;
 SESSION:Y = 107;
-SESSION:Title = Velocidad;
+SESSION:Title = "Sistema de Asistencia en Conduccion de Ferrocarriles";
 SESSION:Width = 754;
 SESSION:Height = 585;
 SESSION:Visible = FALSE;
@@ -433,28 +436,28 @@ SESSION:Sizebox = TRUE;
         ****  INSTANCE: Proximo_Semaforo
         *************************************/
 MakeInstance( Proximo_Semaforo, Semaforo );
-Proximo_Semaforo:Color = Verde;
+Proximo_Semaforo:Color = NULL;
 SetSlotOption( Proximo_Semaforo:Color, IMAGE, ColorSem );
 
        /*************************************
         ****  INSTANCE: Proxima_Estacion
         *************************************/
 MakeInstance( Proxima_Estacion, Estacion );
-Proxima_Estacion:Posicion = 12322;
+Proxima_Estacion:Posicion = NULL;
 SetSlotOption( Proxima_Estacion:Posicion, IMAGE, PosProxEst );
 Proxima_Estacion:Distancia_Minima_Frenado = 1245.67474048443;
-Proxima_Estacion:Nombre = 1223;
+Proxima_Estacion:Nombre = NULL;
 SetSlotOption( Proxima_Estacion:Nombre, IMAGE, Edit2_3 );
 
        /*************************************
         ****  INSTANCE: Proxima_Curva
         *************************************/
 MakeInstance( Proxima_Curva, Curva );
-Proxima_Curva:Posicion_Inicio = 1222222222;
+Proxima_Curva:Posicion_Inicio = NULL;
 SetSlotOption( Proxima_Curva:Posicion_Inicio, IMAGE, PosIniCurva );
-Proxima_Curva:Posicion_Fin = 22222222222;
+Proxima_Curva:Posicion_Fin = NULL;
 SetSlotOption( Proxima_Curva:Posicion_Fin, IMAGE, PosFinCurva );
-Proxima_Curva:Radio = 22;
+Proxima_Curva:Radio = NULL;
 SetSlotOption( Proxima_Curva:Radio, IMAGE, RadioCurva );
 Proxima_Curva:Velocidad = 8;
 Proxima_Curva:Distancia_Minima_Frenado = 1134.94809688581;
@@ -463,7 +466,7 @@ Proxima_Curva:Distancia_Minima_Frenado = 1134.94809688581;
         ****  INSTANCE: Condicion_Climatica_Actual
         *************************************/
 MakeInstance( Condicion_Climatica_Actual, Condicion_Climatica );
-Condicion_Climatica_Actual:Descripcion = Lluvia;
+Condicion_Climatica_Actual:Descripcion = NULL;
 SetSlotOption( Condicion_Climatica_Actual:Descripcion, IMAGE, Clima );
 Condicion_Climatica_Actual:Factor = 0.85;
 
@@ -473,11 +476,11 @@ Condicion_Climatica_Actual:Factor = 0.85;
 MakeInstance( Tren_Actual, Tren );
 Tren_Actual:Recorrido = Recorrido_Actual;
 Tren_Actual:Capacidad = Capacidad_Tren_Actual;
-Tren_Actual:Velocidad_Actual = 90;
+Tren_Actual:Velocidad_Actual = NULL;
 SetSlotOption( Tren_Actual:Velocidad_Actual, IMAGE, TrenVel );
-Tren_Actual:Posicion = 12;
+Tren_Actual:Posicion = NULL;
 SetSlotOption( Tren_Actual:Posicion, IMAGE, TrenPos );
-Tren_Actual:Estado_Puertas = Cerradas;
+Tren_Actual:Estado_Puertas = NULL;
 SetSlotOption( Tren_Actual:Estado_Puertas, IMAGE, TrenPuertas );
 Tren_Actual:Distancia_A_Proxima_Formacion = 123210;
 Tren_Actual:Distancia_A_Proxima_Estacion = 12310;
@@ -493,13 +496,13 @@ Recorrido_Actual:Proxima_Curva = Proxima_Curva;
 Recorrido_Actual:Estacion = Proxima_Estacion;
 Recorrido_Actual:Semaforo = Proximo_Semaforo;
 Recorrido_Actual:Condicion_Climantica = Condicion_Climatica_Actual;
-Recorrido_Actual:Posicion_Siguiente_Tren = 123222;
+Recorrido_Actual:Posicion_Siguiente_Tren = NULL;
 SetSlotOption( Recorrido_Actual:Posicion_Siguiente_Tren, IMAGE, PosProxTren );
-Recorrido_Actual:Velocidad_Maxima_Reglamentaria = 122;
+Recorrido_Actual:Velocidad_Maxima_Reglamentaria = NULL;
 SetSlotOption( Recorrido_Actual:Velocidad_Maxima_Reglamentaria, IMAGE, VelMaxReg );
-Recorrido_Actual:Velocidad_Minima_Reglamentaria = 11;
+Recorrido_Actual:Velocidad_Minima_Reglamentaria = NULL;
 SetSlotOption( Recorrido_Actual:Velocidad_Minima_Reglamentaria, IMAGE, VelMinReg );
-Recorrido_Actual:Nombre = 123;
+Recorrido_Actual:Nombre = NULL;
 SetSlotOption( Recorrido_Actual:Nombre, IMAGE, NombreRecorrido );
 Recorrido_Actual:Velocidad_Maxima_Permitida = 89;
 
@@ -507,7 +510,7 @@ Recorrido_Actual:Velocidad_Maxima_Permitida = 89;
         ****  INSTANCE: Capacidad_Tren_Actual
         *************************************/
 MakeInstance( Capacidad_Tren_Actual, Capacidad );
-Capacidad_Tren_Actual:Valor = 23;
+Capacidad_Tren_Actual:Valor = NULL;
 SetSlotOption( Capacidad_Tren_Actual:Valor, IMAGE, TrenCap );
 Capacidad_Tren_Actual:Factor = 0.85;
 
@@ -546,7 +549,7 @@ ColorSem:Height = 27;
 ColorSem:Transparent = TRUE;
 SetValue( ColorSem:AllowableValues, Verde, Amarillo, Rojo );
 ColorSem:TabStop = 0;
-ColorSem:Value = Verde;
+ColorSem:Value = NULL;
 ColorSem:Owner = Proximo_Semaforo;
 ColorSem:OwnerSlot = Color;
  ResetImage (  ColorSem  ); 
@@ -569,7 +572,7 @@ Clima:Height = 27;
 Clima:Transparent = TRUE;
 SetValue( Clima:AllowableValues, Despejado, Lluvia, Nieve, Niebla );
 Clima:TabStop = 0;
-Clima:Value = Lluvia;
+Clima:Value = NULL;
 Clima:Owner = Condicion_Climatica_Actual;
 Clima:OwnerSlot = Descripcion;
  ResetImage (  Clima  ); 
@@ -592,7 +595,7 @@ TrenPuertas:Height = 27;
 TrenPuertas:Transparent = TRUE;
 SetValue( TrenPuertas:AllowableValues, Abiertas, Cerradas );
 TrenPuertas:TabStop = 0;
-TrenPuertas:Value = Cerradas;
+TrenPuertas:Value = NULL;
 TrenPuertas:Owner = Tren_Actual;
 TrenPuertas:OwnerSlot = Estado_Puertas;
  ResetImage (  TrenPuertas  ); 
@@ -615,7 +618,7 @@ NombreRecorrido:Height = 23;
 NombreRecorrido:Multiline = FALSE;
 NombreRecorrido:Password = FALSE;
 NombreRecorrido:TabStop = 1;
-NombreRecorrido:Value = 123;
+NombreRecorrido:Value = NULL;
 NombreRecorrido:Owner = Recorrido_Actual;
 NombreRecorrido:OwnerSlot = Nombre;
  ResetImage (  NombreRecorrido  ); 
@@ -694,7 +697,7 @@ VelMinReg:Password = FALSE;
 VelMinReg:TabStop = 2;
 VelMinReg:Owner = Recorrido_Actual;
 VelMinReg:OwnerSlot = Velocidad_Minima_Reglamentaria;
-VelMinReg:Value = 11;
+VelMinReg:Value = NULL;
  ResetImage (  VelMinReg  ); 
 
        /*************************************
@@ -717,7 +720,7 @@ VelMaxReg:Password = FALSE;
 VelMaxReg:TabStop = 3;
 VelMaxReg:Owner = Recorrido_Actual;
 VelMaxReg:OwnerSlot = Velocidad_Maxima_Reglamentaria;
-VelMaxReg:Value = 122;
+VelMaxReg:Value = NULL;
  ResetImage (  VelMaxReg  ); 
 
        /*************************************
@@ -738,7 +741,7 @@ PosProxTren:Height = 23;
 PosProxTren:Multiline = FALSE;
 PosProxTren:Password = FALSE;
 PosProxTren:TabStop = 4;
-PosProxTren:Value = 123222;
+PosProxTren:Value = NULL;
 PosProxTren:Owner = Recorrido_Actual;
 PosProxTren:OwnerSlot = Posicion_Siguiente_Tren;
  ResetImage (  PosProxTren  ); 
@@ -761,7 +764,7 @@ Edit2_3:Height = 23;
 Edit2_3:Multiline = FALSE;
 Edit2_3:Password = FALSE;
 Edit2_3:TabStop = 1;
-Edit2_3:Value = 1223;
+Edit2_3:Value = NULL;
 Edit2_3:Owner = Proxima_Estacion;
 Edit2_3:OwnerSlot = Nombre;
  ResetImage (  Edit2_3  ); 
@@ -784,7 +787,7 @@ PosProxEst:Height = 23;
 PosProxEst:Multiline = FALSE;
 PosProxEst:Password = FALSE;
 PosProxEst:TabStop = 1;
-PosProxEst:Value = 12322;
+PosProxEst:Value = NULL;
 PosProxEst:Owner = Proxima_Estacion;
 PosProxEst:OwnerSlot = Posicion;
  ResetImage (  PosProxEst  ); 
@@ -807,7 +810,7 @@ PosIniCurva:Height = 23;
 PosIniCurva:Multiline = FALSE;
 PosIniCurva:Password = FALSE;
 PosIniCurva:TabStop = 1;
-PosIniCurva:Value = 1222222222;
+PosIniCurva:Value = NULL;
 PosIniCurva:Owner = Proxima_Curva;
 PosIniCurva:OwnerSlot = Posicion_Inicio;
  ResetImage (  PosIniCurva  ); 
@@ -830,7 +833,7 @@ PosFinCurva:Height = 23;
 PosFinCurva:Multiline = FALSE;
 PosFinCurva:Password = FALSE;
 PosFinCurva:TabStop = 1;
-PosFinCurva:Value = 22222222222;
+PosFinCurva:Value = NULL;
 PosFinCurva:Owner = Proxima_Curva;
 PosFinCurva:OwnerSlot = Posicion_Fin;
  ResetImage (  PosFinCurva  ); 
@@ -853,7 +856,7 @@ RadioCurva:Height = 23;
 RadioCurva:Multiline = FALSE;
 RadioCurva:Password = FALSE;
 RadioCurva:TabStop = 1;
-RadioCurva:Value = 22;
+RadioCurva:Value = NULL;
 RadioCurva:Owner = Proxima_Curva;
 RadioCurva:OwnerSlot = Radio;
  ResetImage (  RadioCurva  ); 
@@ -876,7 +879,7 @@ TrenVel:Height = 23;
 TrenVel:Multiline = FALSE;
 TrenVel:Password = FALSE;
 TrenVel:TabStop = 1;
-TrenVel:Value = 90;
+TrenVel:Value = NULL;
 TrenVel:Owner = Tren_Actual;
 TrenVel:OwnerSlot = Velocidad_Actual;
  ResetImage (  TrenVel  ); 
@@ -899,7 +902,7 @@ TrenPos:Height = 23;
 TrenPos:Multiline = FALSE;
 TrenPos:Password = FALSE;
 TrenPos:TabStop = 1;
-TrenPos:Value = 12;
+TrenPos:Value = NULL;
 TrenPos:Owner = Tren_Actual;
 TrenPos:OwnerSlot = Posicion;
  ResetImage (  TrenPos  ); 
@@ -922,7 +925,7 @@ TrenCap:Height = 23;
 TrenCap:Multiline = FALSE;
 TrenCap:Password = FALSE;
 TrenCap:TabStop = 1;
-TrenCap:Value = 23;
+TrenCap:Value = NULL;
 TrenCap:Owner = Capacidad_Tren_Actual;
 TrenCap:OwnerSlot = Valor;
  ResetImage (  TrenCap  ); 
@@ -1524,8 +1527,8 @@ Text21:Justification = CENTER;
         *************************************/
 MakeInstance( Text22, Text );
 Text22:SessionNumber = 0;
-Text22:Title = "Disminuya velocidad a 89 km/h";
-Text22:Visible = TRUE;
+Text22:Title = NULL;
+Text22:Visible = FALSE;
 Text22:X = 447;
 Text22:Y = 385;
 SetValue( Text22:ForegroundColor, 0, 0, 128 );
@@ -1550,7 +1553,7 @@ Text22:Transparent = TRUE;
 MakeInstance( TxtAS, Text );
 TxtAS:SessionNumber = 0;
 TxtAS:Title = "Accion Sugerida";
-TxtAS:Visible = TRUE;
+TxtAS:Visible = FALSE;
 TxtAS:X = 436;
 TxtAS:Y = 348;
 SetValue( TxtAS:ForegroundColor, 0, 0, 0 );
